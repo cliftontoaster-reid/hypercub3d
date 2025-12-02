@@ -53,3 +53,13 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# Target files
+/target/
+
+# Link flags
+*.linkflag_*
+/compile_commands.json
+
+# Binary
+/cub3d
