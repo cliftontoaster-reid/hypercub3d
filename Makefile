@@ -1,12 +1,12 @@
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -std=gnu17 -pipe
-LDFLAGS = -lm -lX11 -lXext
+LDFLAGS = -lm -lX11 -lXext -flto
 RM ?= rm -rf
 
 MODE ?= debug
 ifeq ($(MODE),release)
-	CFLAGS  += -O3 -g3 -D_FORTIFY_SOURCE=2
-	LDFLAGS += -Wl,-z,relro -Wl,-z,now
+	CFLAGS  += -O3 -g3 -D_FORTIFY_SOURCE=2 -ffunction-sections -fdata-sections
+	LDFLAGS += -Wl,-z,relro -Wl,-z,now -Wl,--gc-sections
 else ifeq ($(MODE),debug)
 	CFLAGS  += -O0 -g3 -fstack-protector-strong -fstack-clash-protection -Warray-bounds -Wformat-security -fno-omit-frame-pointer
 else
@@ -112,14 +112,14 @@ endif
 #
 # NOTE: You must set LIB42_COMMIT and MLX_COMMIT to a specific commit hash before building.
 # Usage: make LIB42_COMMIT=<commit> MLX_COMMIT=<commit> all
-LIB42_REPO_URL = https://github.com/cliftontoaster-reid/lib42
+LIB42_REPO_URL = https://github.com/cliftontoaster-reid/libft
 LIB42_DEPO = $(WAREHOUSE_DIR)/lib42
 LIB42_MODULE_DIR = $(OFFICE_DIR)/lib42
 LIB42_SRC_DIR = $(LIB42_MODULE_DIR)/src
-LIB42_ARCHIVE = $(LIB42_MODULE_DIR)/build/lib42.a
+LIB42_ARCHIVE = $(LIB42_MODULE_DIR)/libft.a
 LIB42_INCLUDE_DIR = $(LIB42_MODULE_DIR)
 INCLUDE += -I$(LIB42_INCLUDE_DIR)
-LIB42_COMMIT ?= d20cda31a5c384ae2070be5feffe240a89a3586a
+LIB42_COMMIT ?= f4fcf8f1aa7c4bb3c97c171a52f167dcabd16c9c
 
 MLX_REPO_URL = https://github.com/42Paris/minilibx-linux
 MLX_DEPO = $(WAREHOUSE_DIR)/minilibx
@@ -177,7 +177,7 @@ $(BIN_DIR)/$(NAME): $(OBJ)  $(INCLUDED_FILES)
 	@$(CC) -o "$@" $(OBJ) $(LIB42_ARCHIVE) $(LDFLAGS) -D 'VERSION=\"$(VERSION)\"'
 	@echo -e "$(BOLD)Linked$(RESET) $(GREEN)$(NAME)$(RESET)$(BOLD)" at "$(RESET)$(GREEN)$@$(RESET)"
 
-$(NAME): .linkflag_$(TROUPLET) $(BIN_DIR)/$(NAME)
+$(NAME): .linkflag_$(TROUPLET) $(BIN_DIR)/$(NAME) $(LIB42_ARCHIVE) $(MLX_ARCHIVE) $(OBJ)
 	@cp $(BIN_DIR)/$(NAME) ./$(NAME)
 	@echo -e "$(BOLD)Copied$(RESET) $(GREEN)$(NAME)$(RESET) $(GREEN)to project root.$(RESET)"
 
@@ -231,8 +231,7 @@ $(LIB42_ARCHIVE):
 	@git -C "$(LIB42_MODULE_DIR)" fetch --quiet origin || true
 	@git -C "$(LIB42_MODULE_DIR)" checkout -q "$(LIB42_COMMIT)" || (echo "Failed to checkout LIB42_COMMIT=$(LIB42_COMMIT)"; exit 1)
 	@echo -e "$(BOLD)Checked out libft at commit:$(RESET) $(YELLOW)$(LIB42_REPO_URL)/commit/$(LIB42_COMMIT)$(RESET)"
-	@cmake -S "$(LIB42_MODULE_DIR)" -B "$(LIB42_MODULE_DIR)/build" > /dev/null 2>&1
-	@cmake --build "$(LIB42_MODULE_DIR)/build" --config Release > /dev/null 2>&1
+	@$(MAKE) -C "$(LIB42_MODULE_DIR)" all CC="$(CC)" > /dev/null 2>&1
 	@echo -e "$(BOLD)Built libft:$(RESET) $(GREEN)$(LIB42_ARCHIVE)$(RESET)"
 
 $(MLX_ARCHIVE):
@@ -259,7 +258,7 @@ test: criterion all $(TOBJ) $(TDEP)
 
 run_test/%:
 	@echo "Running tests in virtual X11 display ($*-bit depth)..."
-	@export DISPLAY_DEPTH=$* && LD_LIBRARY_PATH=$(BIN_DIR):$(CRITERION_INSTALL_DIR)/lib xvfb-run --auto-servernum --server-args='-screen 0 1024x768x$*' $(BIN_DIR)/$(NAME).test --V
+	@export DISPLAY_DEPTH=$* && LD_LIBRARY_PATH=$(BIN_DIR):$(CRITERION_INSTALL_DIR)/lib xvfb-run --auto-servernum --server-args='-screen 0 1024x768x$*' $(BIN_DIR)/$(NAME).test
 
 run_tests: test
 	$(MAKE) run_test/24
