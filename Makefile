@@ -19,6 +19,21 @@ ifeq ($(FSAN),true)
 	LDFLAGS += -fsanitize=address,undefined
 endif
 
+# Accept legacy `VERBOSE` values (VERBOSE=1/0 or VERBOSE=true/false)
+# but don't override if `V` is already provided
+ifneq ($(origin V), undefined)
+	# V already set by user; keep it
+else
+	ifdef VERBOSE
+		ifeq ($(strip $(VERBOSE)),1)
+			V := true
+		else ifeq ($(strip $(VERBOSE)),0)
+			V := false
+		else
+			V := $(strip $(VERBOSE))
+		endif
+	endif
+endif
 V ?= false
 # if not false or true, error
 ifeq ($(V),true)

@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:44:45 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/05 10:52:52 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/12/08 16:10:22 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 #define SYN_ERR_CANNOT_OPEN_MAP_FILE "Cannot open map file."
 #define SYN_ERR_MEMORY_ALLOCATION "Memory allocation failed."
 #define SYN_ERR_UNEXPECTED_EOF "Unexpected end of file."
+#define SYN_ERR_NO_EMPTY_ROWS "No empty lines are in the map."
 
 /// @brief Scan the map string for illegal characters
 /// @param str The map string to scan
