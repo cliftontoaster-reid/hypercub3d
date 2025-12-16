@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 14:03:27 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/09 14:14:56 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/12/10 13:26:28 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_table
 size_t			get_longest_row_length(const char *str);
 
 t_table			*table_new(size_t width, size_t height);
-bool			table_load(t_table *table, const char *content);
+t_table			*table_load(const char *content);
 void			table_free(t_table *table);
 
 bool			table_is_dynamic(t_table *table, size_t x, size_t y);

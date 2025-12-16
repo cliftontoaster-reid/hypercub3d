@@ -63,3 +63,7 @@ dkms.conf
 
 # Binary
 /cub3d
+
+# VS Code settings
+.vscode/*
+!.vscode/extensions.json

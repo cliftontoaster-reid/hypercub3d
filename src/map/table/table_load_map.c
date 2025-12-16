@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 14:04:51 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/09 14:07:16 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/12/10 13:49:40 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,23 @@ bool	table_load_map(t_table *table, const char *map)
 		else
 		{
 			if (!is_valid_cell_char(map[i]))
-				table->cells[y][x] = map[i];
-			else
+				return (false);
+			if (!table->cells || !table->cells[y] || x >= table->width)
+				return (false);
+			if (is_player_char(map[i]))
 			{
-				if (is_player_char(map[i]) && player_found)
+				if (player_found)
 					return (false);
 				table->cells[y][x] = '0';
 				table->player_pos.x = x;
 				table->player_pos.y = y;
 				player_found = true;
 			}
+			else
+				table->cells[y][x] = map[i];
+			x++;
 		}
-		x++;
+		i++;
 	}
 	return (player_found);
 }
