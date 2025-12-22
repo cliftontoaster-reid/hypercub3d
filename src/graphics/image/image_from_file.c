@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image_from_file.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 16:24:57 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/10 13:05:16 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/12/22 15:15:10 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_image	*image_from_file(void *mlx_ptr, const char *filepath)
 	}
 	img->mlx_ptr = mlx_ptr;
 	endian = 0;
-	img->data_ptr = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->lln,
+	img->addr = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->lln,
 			&endian);
 	if (endian == 0)
 		img->endian = ENDIAN_LITTLE;

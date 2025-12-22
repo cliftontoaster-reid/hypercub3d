@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colour_to_uint.c                                   :+:      :+:    :+:   */
+/*   close_window.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 18:47:15 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/19 15:30:23 by mbores           ###   ########.fr       */
+/*   Created: 2025/12/17 16:18:22 by mbores            #+#    #+#             */
+/*   Updated: 2025/12/22 14:42:02 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "graphics/colour.h"
+#include "map/minimap.h"
 
-uint32_t	colour_to_uint(t_colour colour, t_endianess endianess)
+int close_window(t_holy_cow *all)
 {
-	if (endianess != ENDIAN_LITTLE)
-		return ((uint32_t)(colour.b << 16 | colour.g << 8 | colour.r));
-	else
-		return ((uint32_t)(colour.r << 16 | colour.g << 8 | colour.b));
+    mlx_destroy_window(all->window->mlx, all->window->mlx_win);
+    mlx_destroy_display(all->window->mlx);
+    free(all->window);
+    free(all->content);
+    table_free(all->map);
+    free(all);
+    exit(0);
 }
