@@ -121,7 +121,7 @@ else
 	BLUE =
 endif
 
-.PHONY: all clean fclean re install uninstall dirs criterion libft bench run_bench
+.PHONY: all clean fclean re install uninstall dirs criterion libft bench run_bench test test format make_perf_maps tidy
 
 # libft library (cloned from git and built with make)
 #
@@ -315,6 +315,12 @@ make_perf_maps: $(TMP_DIR)/genMap
 		s=$$((s*2)); \
 	done
 	@echo "Performance maps generated in $(TARGET_DIR)/maps."
+
+tidy: 
+# Runs clang-tidy on all source files
+	@echo "Running clang-tidy on source files..."
+	@find $(SRC_DIR) -type f -name '*.c' | xargs clang-tidy -p=$(OFFICE_DIR)
+	@echo "clang-tidy analysis complete."
 
 $(TMP_DIR)/genMap: $(SCRIPT_DIR)/genMapClaude.go
 	@mkdir -p $(TMP_DIR)
