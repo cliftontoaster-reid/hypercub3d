@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 15:54:47 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/03 16:20:26 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/12/22 15:14:19 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,22 @@ typedef enum e_endianess
 
 typedef struct s_image
 {
-	size_t		width;
-	size_t		height;
+	int			width;
+	int			height;
 
 	void		*mlx_ptr;
 	void		*img_ptr;
-	void		*data_ptr;
+
+	char		*addr;
 
 	/// @brief The number of bits per pixel
 	int			bpp;
 	/// @brief The number of bytes in a single row of the image
 	int			lln;
 	/// @brief The endianess of the image data
-	t_endianess	endian;
+	int			endian;
 }				t_image;
 
-t_image			*image_new(void *mlx_ptr, size_t width, size_t height);
+t_image			*image_new(void *mlx_ptr, int width, int height);
 t_image			*image_from_file(void *mlx_ptr, const char *filepath);
 void			image_free(t_image *img);

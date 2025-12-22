@@ -263,7 +263,7 @@ $(MLX_ARCHIVE):
 	@git -C "$(MLX_MODULE_DIR)" fetch --quiet origin || true
 	@git -C "$(MLX_MODULE_DIR)" checkout -q "$(MLX_COMMIT)" || (echo "Failed to checkout MLX_COMMIT=$(MLX_COMMIT)"; exit 1)
 	@echo -e "$(BOLD)Checked out minilibx at commit:$(RESET) $(YELLOW)$(MLX_REPO_URL)/commit/$(MLX_COMMIT)$(RESET)"
-	@$(MAKE) -C "$(MLX_MODULE_DIR)" all CC="$(CC)" > /dev/null 2>&1
+	@$(MAKE) -C "$(MLX_MODULE_DIR)" all CC="$(CC)" > /dev/null
 	@echo -e "$(BOLD)Built minilibx:$(RESET) $(GREEN)$(MLX_ARCHIVE)$(RESET)"
 
 test: criterion all $(TOBJ) $(TDEP)

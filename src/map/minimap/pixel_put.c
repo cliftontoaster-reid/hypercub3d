@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colour_to_uint.c                                   :+:      :+:    :+:   */
+/*   pixel_put.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 18:47:15 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/19 15:30:23 by mbores           ###   ########.fr       */
+/*   Created: 2025/12/19 15:44:25 by mbores            #+#    #+#             */
+/*   Updated: 2025/12/22 15:13:48 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "graphics/colour.h"
+#include "map/minimap.h"
 
-uint32_t	colour_to_uint(t_colour colour, t_endianess endianess)
+void	my_mlx_pixel_put(t_image *img, int x, int y, int color)
 {
-	if (endianess != ENDIAN_LITTLE)
-		return ((uint32_t)(colour.b << 16 | colour.g << 8 | colour.r));
-	else
-		return ((uint32_t)(colour.r << 16 | colour.g << 8 | colour.b));
+	char	*dst;
+
+	if (!img || !img->addr)
+		return;
+	if (x < 0 || y < 0 || x >= img->width || y >= img->height)
+		return;	
+	dst = img->addr + (y * img->lln + x * (img->bpp / 8));
+	dst[0] = (color) & 0xFF;
+	dst[1] = (color >> 8) & 0xFF;
+	dst[2] = (color >> 16) & 0xFF;
+	if (img->bpp == 32)
+		dst[3] = (color >> 24) & 0xFF;
 }
