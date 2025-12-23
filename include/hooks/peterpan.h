@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   peterpan.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:26:55 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/22 16:19:18 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/12/23 16:38:39 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #include "utils/vec.h"
 #include <stdbool.h>
+#define XK_MISCELLANY
+#include <X11/keysymdef.h>
 
 #define EVENT_KEY_PRESS 2L
 #define EVENT_KEY_RELEASE 3L
@@ -27,7 +29,9 @@
 #define MASK_MOUSE_RELEASE 1L << 3
 #define MASK_MOUSE_MOVE 1L << 19
 
-#define KEYS_COUNT 256
+#define KEYS_COUNT 0xffff
+
+#define KEY_ESC 27
 
 typedef struct s_key_event
 {

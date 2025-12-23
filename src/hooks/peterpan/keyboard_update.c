@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_update.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:39:48 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/22 16:19:18 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/12/23 16:34:59 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hooks/peterpan.h"
+#include "stdio.h"
 
 // Updates the keyboard state
 void	keyboard_update(t_key_state *k, int c, bool p)
 {
 	t_key_event	*event;
 
+	printf("Key: %d/%d\n", c, p);
 	if (c < 0 || c >= KEYS_COUNT)
 		return ;
 	k->keys[c] = p;
