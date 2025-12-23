@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_init.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:39:05 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/23 16:35:14 by mbores           ###   ########.fr       */
+/*   Updated: 2025/12/23 17:21:44 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_key_state	*keyboard_init(void *mlx, void *win)
 	if (!k)
 		return (NULL);
 	ft_memset(k->keys, false, sizeof(k->keys));
+	ft_memset(k->events, 0, sizeof(k->events));
 	mlx_hook(win, EVENT_KEY_PRESS, MASK_KEY_PRESS, keyboard_yes, k);
 	mlx_hook(win, EVENT_KEY_RELEASE, MASK_KEY_RELEASE, keyboard_no, k);
 	return (k);
