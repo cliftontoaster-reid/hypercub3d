@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_window.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 15:23:36 by mbores            #+#    #+#             */
-/*   Updated: 2025/12/23 16:42:29 by mbores           ###   ########.fr       */
+/*   Updated: 2025/12/23 17:33:07 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	init_window(t_holy_cow *all)
 	display_player(all);
 	all->keyboard = keyboard_init(all->window->mlx, all->window->mlx_win);
 	all->mouse = mouse_init(all->window->mlx, all->window->mlx_win);
-	keyboard_on_press(all->keyboard, KEY_ESC, close_window, all);
 	keyboard_on_press(all->keyboard, XK_Escape, close_window, all);
 	mlx_hook(all->window->mlx_win, 17, 1L << 17, close_window_worse, all);
 	mlx_loop(all->window->mlx);

@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:39:05 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/23 17:21:44 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/12/23 17:32:56 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	keyboard_yes(int keycode, t_key_state *k)
 	ft_printf("yes\n");
 	if (keycode < 0 || keycode > KEYS_COUNT)
 		return (0);
-	keyboard_update(k, (unsigned char)keycode, true);
+	keyboard_update(k, keycode, true);
 	return (0);
 }
 
@@ -29,7 +29,7 @@ static int	keyboard_no(int keycode, t_key_state *k)
 	ft_printf("no\n");
 	if (keycode < 0 || keycode > KEYS_COUNT)
 		return (0);
-	keyboard_update(k, (unsigned char)keycode, false);
+	keyboard_update(k, keycode, false);
 	return (0);
 }
 
