@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   peterpan.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:26:55 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/23 16:38:39 by mbores           ###   ########.fr       */
+/*   Updated: 2025/12/23 16:49:35 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "utils/vec.h"
 #include <stdbool.h>
 #define XK_MISCELLANY
-#include <X11/keysymdef.h>
+#include <hooks/keys.h>
 
 #define EVENT_KEY_PRESS 2L
 #define EVENT_KEY_RELEASE 3L
