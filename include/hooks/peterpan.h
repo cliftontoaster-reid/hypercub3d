@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:26:55 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/05 11:18:41 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/05 13:09:28 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "utils/vec.h"
 #include <stdbool.h>
 #define XK_MISCELLANY
+#define XK_LATIN1
 #include <X11/keysymdef.h>
 
 #define EVENT_KEY_PRESS 2L
@@ -69,4 +70,5 @@ void			mouse_update_button(t_mouse_state *m, unsigned char b, bool p);
 bool			mouse_is_button_pressed(t_mouse_state *m, unsigned char b);
 t_vec2			mouse_get_delta(t_mouse_state *m);
 t_vec2			mouse_get_position(t_mouse_state *m);
-void			mouse_reset_delta(t_mouse_state *m);
+void			mouse_reset_delta(t_mouse_state *m, void *mlx, void *win,
+					t_vec2i win_size);

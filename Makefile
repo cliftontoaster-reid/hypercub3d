@@ -1,6 +1,8 @@
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -std=gnu17 -pipe
 LDFLAGS = -lm -lX11 -lXext -flto
+BONUSFLAGS = -D COLLISION
+EXTRA_CFLAGS =
 RM ?= rm -rf
 
 MODE ?= debug
@@ -121,7 +123,7 @@ else
 	BLUE =
 endif
 
-.PHONY: all clean fclean re install uninstall dirs criterion libft bench run_bench test test format make_perf_maps tidy
+.PHONY: all clean fclean re install uninstall dirs criterion libft bench run_bench test test format make_perf_maps tidy bonus
 
 # libft library (cloned from git and built with make)
 #
@@ -169,7 +171,7 @@ all: dirs $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c ${LIB42_ARCHIVE} ${MLX_ARCHIVE}
 	@mkdir -p $(@D) $(dir $(DEP_DIR)/$*.d)
-	@$(CC) $(CFLAGS) -fPIC -MMD -MP -MF $(DEP_DIR)/$*.d -c $< -o $@ $(INCLUDE) -D 'VERSION="$(VERSION)"'
+	@$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -fPIC -MMD -MP -MF $(DEP_DIR)/$*.d -c $< -o $@ $(INCLUDE) -D 'VERSION="$(VERSION)"'
 	@if [ "$(V)" = "true" ]; then \
 		echo -e "$(BOLD)Compiled$(RESET) $(BLUE)$<$(RESET) -> $(GREEN)$@$(RESET) $(BOLD)$(RED)$(DEP_DIR)/$*.d$(RESET)"; \
 	fi
@@ -200,8 +202,8 @@ dirs:
 	@$(foreach d, $(DIRS), mkdir -p "$(d)";)
 
 clean:
-	@$(RM) -r $(OBJ_DIR) $(DEP_DIR)
-	@echo -e "$(BOLD)Removed object and dependency files.$(RESET)"
+	@find $(ORIGIN_DIR) -mindepth 1 -maxdepth 1 -type d ! -name warehouse -exec rm -rf {} + 2>/dev/null || true
+	@echo -e "$(BOLD)Removed object and dependency files for all targets.$(RESET)"
 
 fclean: clean
 	@$(RM) -r $(ORIGIN_DIR)
@@ -321,6 +323,10 @@ tidy:
 	@echo "Running clang-tidy on source files..."
 	@find $(SRC_DIR) -type f -name '*.c' | xargs clang-tidy -p=$(OFFICE_DIR)
 	@echo "clang-tidy analysis complete."
+
+bonus:
+	@$(MAKE) all TROUPLET="$(TROUPLET)-bonus" EXTRA_CFLAGS="$(BONUSFLAGS)"
+	@echo -e "$(BOLD)Built bonus version.$(RESET)"
 
 $(TMP_DIR)/genMap: $(SCRIPT_DIR)/genMapClaude.go
 	@mkdir -p $(TMP_DIR)

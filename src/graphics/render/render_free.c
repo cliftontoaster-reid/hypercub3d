@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mouse_reset_delta.c                                :+:      :+:    :+:   */
+/*   render_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 16:01:33 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/05 13:09:20 by lfiorell         ###   ########.fr       */
+/*   Created: 2026/01/05 12:45:43 by lfiorell          #+#    #+#             */
+/*   Updated: 2026/01/05 12:53:48 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "hooks/peterpan.h"
+#include "graphics/render.h"
 #include "mlx.h"
-#include "utils/vec.h"
 
-// Resets the mouse movement delta by centering it and updating position
-void	mouse_reset_delta(t_mouse_state *m, void *mlx, void *win,
-		t_vec2i win_size)
+void	render_free(t_renderctx *ctx)
 {
-	int	center_x;
-	int	center_y;
-
-	center_x = win_size.x / 2;
-	center_y = win_size.y / 2;
-	mlx_mouse_move(mlx, win, center_x, center_y);
-	mouse_update_pos(m, center_x, center_y);
+	if (!ctx)
+		return ;
+	if (ctx->buffer)
+		image_free(ctx->buffer);
+	if (ctx->win)
+		mlx_destroy_window(ctx->mlx, ctx->win);
+	free(ctx);
 }

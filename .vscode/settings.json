@@ -1,5 +1,8 @@
 {
   "[c]": {
     "editor.defaultFormatter": "keyhr.42-c-format"
+  },
+  "[c++]": {
+    "editor.defaultFormatter": "keyhr.42-c-format"
   }
 }
