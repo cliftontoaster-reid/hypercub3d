@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 12:48:16 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/05 13:29:37 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/05 13:36:18 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,14 @@ static bool	can_move(t_renderctx *ctx, t_vec2 *new_pos)
 
 static bool	can_move(t_renderctx *ctx, t_vec2 *new_pos)
 {
-	(void)ctx;
-	(void)new_pos;
+	int	new_cell_x;
+	int	new_cell_y;
+
+	new_cell_x = (int)(new_pos->x);
+	new_cell_y = (int)(new_pos->y);
+	if (new_cell_x < 0 || new_cell_x >= ctx->map->width || new_cell_y < 0
+		|| new_cell_y >= ctx->map->height)
+		return (false);
 	return (true);
 }
 
