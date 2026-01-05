@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pixel_put.c                                        :+:      :+:    :+:   */
+/*   image_get_pixel.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 15:44:25 by mbores            #+#    #+#             */
-/*   Updated: 2025/12/22 15:13:48 by mbores           ###   ########.fr       */
+/*   Created: 2026/01/05 11:03:39 by lfiorell          #+#    #+#             */
+/*   Updated: 2026/01/05 11:03:43 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map/minimap.h"
 
-void	my_mlx_pixel_put(t_image *img, int x, int y, int color)
+
+#include "graphics/image.h"
+
+int	image_get_pixel(t_image *img, int x, int y)
 {
-	char	*dst;
+	unsigned char	*dst;
+	int			color;
 
 	if (!img || !img->addr)
-		return;
+		return (0);
 	if (x < 0 || y < 0 || x >= img->width || y >= img->height)
-		return;	
-	dst = img->addr + (y * img->lln + x * (img->bpp / 8));
-	dst[0] = (color) & 0xFF;
-	dst[1] = (color >> 8) & 0xFF;
-	dst[2] = (color >> 16) & 0xFF;
+		return (0);
+	dst = (unsigned char *)(img->addr + (y * img->lln + x * (img->bpp / 8)));
+	color = dst[0] | (dst[1] << 8) | (dst[2] << 16);
 	if (img->bpp == 32)
-		dst[3] = (color >> 24) & 0xFF;
+		color |= (dst[3] << 24);
+	return (color);
 }

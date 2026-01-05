@@ -3,16 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   c.c                                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:25:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/19 15:26:53 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/05 11:09:09 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "graphics/colour.h"
-
-inline int	c(t_colour colour)
-{
-	return (int)colour_to_uint(colour, ENDIAN_LITTLE);
-}
+/* Inlined in include/graphics/colour.h */

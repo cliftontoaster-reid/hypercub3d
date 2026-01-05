@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:44:45 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/08 16:10:22 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/05 11:29:55 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,41 @@
 #define SYN_ERR_UNEXPECTED_EOF "Unexpected end of file."
 #define SYN_ERR_NO_EMPTY_ROWS "No empty lines are in the map."
 
+typedef struct s_torrentrefill
+{
+	const t_table	*desk;
+
+	bool			**refilled;
+	t_vec2i			*to_refill;
+	size_t			refilllen;
+}					t_torrentrefill;
+
 /// @brief Scan the map string for illegal characters
 /// @param str The map string to scan
 /// @return true if the string contains only allowed characters, false otherwise
-ssize_t	syn_scanstr(const char *str);
+ssize_t				syn_scanstr(const char *str);
 
 /// @brief Check if the character is part of the allowed syntax characters
 /// @param c The character to check
 /// @return true if the character is valid, false otherwise
-bool	syn_validchar(char c);
+bool				syn_validchar(char c);
+
+/// @brief Initialize a torrent refill structure
+/// @param desk The table/map to initialize for
+/// @return A pointer to the new torrent refill structure, or NULL on error
+t_torrentrefill		*syn_init_torrentrefill(const t_table *desk);
+
+/// @brief Free a torrent refill structure
+/// @param refill The structure to free
+/// @return true if successful, false otherwise
+bool				syn_free_torrentrefill(t_torrentrefill *refill);
+
+/// @brief Run the torrent refill algorithm
+/// @param refill The torrent refill structure
+/// @param start_pos The starting position for the algorithm
+/// @return true if successful, false otherwise
+bool				syn_run_torrentrefill(t_torrentrefill *refill,
+						t_vec2i start_pos);
 
 /// @brief Validate that the map is not using American layout
 ///
@@ -50,4 +76,4 @@ bool	syn_validchar(char c);
 ///
 /// @param map_str The map string to validate
 /// @return true if the map is valid, false otherwise
-bool	syn_validate_unamerican(t_table *map);
+bool				syn_validate_unamerican(t_table *map);

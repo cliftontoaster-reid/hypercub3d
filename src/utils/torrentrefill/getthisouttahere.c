@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_handler.c                                      :+:      :+:    :+:   */
+/*   getthisouttahere.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 15:36:10 by mbores            #+#    #+#             */
-/*   Updated: 2026/01/05 11:23:53 by lfiorell         ###   ########.fr       */
+/*   Created: 2026/01/05 11:24:32 by lfiorell          #+#    #+#             */
+/*   Updated: 2026/01/05 11:32:14 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map/minimap.h"
+#include "utils/torrentrefill.h"
+#include <stdlib.h>
 
-int	key_handler(int keycode, t_holy_cow *all)
+void	getthisouttahere(void **list, size_t height)
 {
-	if (keycode == 65307)
-		close_window(all);
-	return (0);
+	size_t	y;
+
+	y = 0;
+	while (y < height)
+	{
+		free(list[y]);
+		y++;
+	}
+	free(list);
 }

@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:26:55 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/23 17:33:03 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/05 11:18:41 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "utils/vec.h"
 #include <stdbool.h>
 #define XK_MISCELLANY
-#include <hooks/keys.h>
+#include <X11/keysymdef.h>
 
 #define EVENT_KEY_PRESS 2L
 #define EVENT_KEY_RELEASE 3L
@@ -23,11 +23,11 @@
 #define EVENT_MOUSE_RELEASE 5L
 #define EVENT_MOUSE_MOVE 6L
 
-#define MASK_KEY_PRESS 1L
-#define MASK_KEY_RELEASE 1L << 1
-#define MASK_MOUSE_PRESS 1L << 2
-#define MASK_MOUSE_RELEASE 1L << 3
-#define MASK_MOUSE_MOVE 1L << 19
+#define MASK_KEY_PRESS 0x1L
+#define MASK_KEY_RELEASE 0x2L
+#define MASK_MOUSE_PRESS 0x4L
+#define MASK_MOUSE_RELEASE 0x8L
+#define MASK_MOUSE_MOVE 0x80000L
 
 #define KEYS_COUNT 0xffff
 

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   vec2i_dot.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: copilot <copilot@local>                     +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 00:00:00 by copilot           #+#    #+#             */
+/*   Created: 2026/01/05 11:33:51 by lfiorell          #+#    #+#             */
+/*   Updated: 2026/01/05 11:33:52 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils/vec.h"
 
-int vec2i_dot(t_vec2i a, t_vec2i b)
+int	vec2i_dot(t_vec2i a, t_vec2i b)
 {
-    return (a.x * b.x + a.y * b.y);
+	return (a.x * b.x + a.y * b.y);
 }

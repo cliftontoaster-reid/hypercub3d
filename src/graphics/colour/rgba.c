@@ -6,13 +6,8 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 18:47:26 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/03 18:47:27 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/05 11:09:09 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "graphics/colour.h"
-
-t_colour	rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
-{
-	return ((t_colour){r, g, b, a});
-}
+/* Inlined in include/graphics/colour.h */

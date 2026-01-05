@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   vec2_dot.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: copilot <copilot@local>                     +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 00:00:00 by copilot           #+#    #+#             */
+/*   Created: 2026/01/05 11:33:10 by lfiorell          #+#    #+#             */
+/*   Updated: 2026/01/05 11:33:11 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils/vec.h"
 
-float vec2_dot(t_vec2 a, t_vec2 b)
+float	vec2_dot(t_vec2 a, t_vec2 b)
 {
-    return (a.x * b.x + a.y * b.y);
+	return (a.x * b.x + a.y * b.y);
 }

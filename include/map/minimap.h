@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 15:23:56 by mbores            #+#    #+#             */
-/*   Updated: 2025/12/23 16:27:24 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/05 11:01:32 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ typedef struct s_holy_cow
 // init_window.c
 void				init_window(t_holy_cow *all);
 
-// pixel_put.c
-void				my_mlx_pixel_put(t_image *img, int x, int y, int color);
+// pixel operations are declared in `graphics/image.h`
 
 // display_player.c
 void				display_player(t_holy_cow *all);
