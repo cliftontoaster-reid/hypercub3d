@@ -20,6 +20,10 @@ ifeq ($(FSAN),true)
 	CFLAGS  += -fsanitize=address,undefined -fno-omit-frame-pointer
 	LDFLAGS += -fsanitize=address,undefined
 endif
+DEBUG ?= false
+ifeq ($(DEBUG),true)
+	CFLAGS  += -D DEBUG
+endif
 
 # Accept legacy `VERBOSE` values (VERBOSE=1/0 or VERBOSE=true/false)
 # but don't override if `V` is already provided

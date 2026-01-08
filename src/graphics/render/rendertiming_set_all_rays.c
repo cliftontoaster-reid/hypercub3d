@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_frame.c                                     :+:      :+:    :+:   */
+/*   rendertiming_set_all_rays.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/05 15:40:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/05 15:45:20 by lfiorell         ###   ########.fr       */
+/*   Created: 2026/01/06 14:55:36 by lfiorell          #+#    #+#             */
+/*   Updated: 2026/01/06 14:55:36 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graphics/render.h"
 
-void	render_frame(t_renderctx *ctx)
+void	rendertiming_set_all_rays(t_rendertiming *t, double time)
 {
-	(void)ctx;
+	t->all_rays = time;
 }
