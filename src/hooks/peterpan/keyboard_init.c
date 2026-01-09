@@ -17,7 +17,6 @@
 
 static int	keyboard_yes(int keycode, t_key_state *k)
 {
-	ft_printf("yes\n");
 	if (keycode < 0 || keycode > KEYS_COUNT)
 		return (0);
 	keyboard_update(k, keycode, true);
@@ -26,7 +25,6 @@ static int	keyboard_yes(int keycode, t_key_state *k)
 
 static int	keyboard_no(int keycode, t_key_state *k)
 {
-	ft_printf("no\n");
 	if (keycode < 0 || keycode > KEYS_COUNT)
 		return (0);
 	keyboard_update(k, keycode, false);
