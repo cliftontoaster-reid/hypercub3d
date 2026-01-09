@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_minimap.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 15:42:10 by mbores            #+#    #+#             */
-/*   Updated: 2026/01/09 16:45:41 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/09 17:05:46 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ static void	put_squares_on_map(t_renderctx *all, int minimap_x, int minimap_y,
 		while (i < 9 && x < all->map->width)
 		{
 			if (all->map->cells[y][x] == '0')
-				put_pixels_in_square(all->buffer, rgb(225, 193, 110), i, j);
+				put_pixels_in_square(all->buffer, all->map->floor_col, i, j);
 			else if (all->map->cells[y][x] == '1')
-				put_pixels_in_square(all->buffer, rgb(255, 255, 143), i, j);
+				put_pixels_in_square(all->buffer, all->map->ceil_col, i, j);
 			x++;
 			i++;
 		}
