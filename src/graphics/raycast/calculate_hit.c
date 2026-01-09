@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 14:47:12 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 16:10:42 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/09 16:53:30 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	calculate_hit(t_raycast *ray, t_rayhit *hit, t_rayside side)
 		hit->hit_map = ray->map_pos;
 		return ;
 	}
-	hit->hit_pos -= (int)hit->hit_pos;
+	hit->hit_pos -= floorf(hit->hit_pos);
 	if (side == RAY_SIDE_EAST || side == RAY_SIDE_WEST)
 		set_side_communist(ray, side, hit);
 	else
