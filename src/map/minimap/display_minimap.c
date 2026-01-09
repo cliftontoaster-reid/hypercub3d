@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_minimap.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 15:42:10 by mbores            #+#    #+#             */
-/*   Updated: 2026/01/08 17:14:35 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/09 14:23:48 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	player_square(t_renderctx *ctx, float x, float y)
 	{
 		while (xx < 5)
 		{
-			image_put_pixel(ctx->buffer_minimap, px + 13 + xx, py + 13 + yy,
+			image_put_pixel(ctx->buffer, px + 13 + xx, py + 13 + yy,
 				c(rgb(255, 0, 0)));
 			xx++;
 		}
@@ -81,10 +81,10 @@ static void	put_squares_on_map(t_renderctx *all, int minimap_x, int minimap_y,
 		while (i < 9 && x < all->map->width)
 		{
 			if (all->map->cells[y][x] == '0')
-				put_pixels_in_square(all->buffer_minimap, rgb(225, 193, 110), i,
+				put_pixels_in_square(all->buffer, rgb(225, 193, 110), i,
 					j);
 			else if (all->map->cells[y][x] == '1')
-				put_pixels_in_square(all->buffer_minimap, rgb(255, 255, 143), i,
+				put_pixels_in_square(all->buffer, rgb(255, 255, 143), i,
 					j);
 			if (x == player_cell_x && y == player_cell_y)
 			{

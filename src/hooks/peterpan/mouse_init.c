@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 15:53:09 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/22 16:05:50 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/09 14:39:23 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hooks/peterpan.h"
+#include "graphics/render.h"
 #include "libft.h"
 #include "mlx.h"
 #include <stdlib.h>
@@ -41,12 +42,17 @@ static int	mouse_no(int button, int x, int y, t_mouse_state *m)
 t_mouse_state	*mouse_init(void *mlx, void *win)
 {
 	t_mouse_state	*m;
+	t_vec2i			p;
 
 	(void)mlx;
 	m = (t_mouse_state *)malloc(sizeof(t_mouse_state));
 	if (!m)
 		return (NULL);
 	ft_bzero(m, sizeof(t_mouse_state));
+	mouse_reset_delta(m, mlx, win, v2i(WIN_WIDTH, WIN_HEIGHT));
+	mlx_mouse_get_pos(mlx, win, &p.x, &p.y);
+	m->pos.x = p.x;
+	m->pos.y = p.y;
 	mlx_hook(win, EVENT_MOUSE_MOVE, MASK_MOUSE_MOVE, mouse_move_callback, m);
 	mlx_hook(win, EVENT_MOUSE_PRESS, MASK_MOUSE_PRESS, mouse_yes, m);
 	mlx_hook(win, EVENT_MOUSE_RELEASE, MASK_MOUSE_RELEASE, mouse_no, m);

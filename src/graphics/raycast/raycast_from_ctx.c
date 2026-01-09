@@ -18,7 +18,7 @@ static void	setup_ray_direction(t_raycast *ray, t_renderctx *ctx, t_vec2 plane,
 {
 	double	camera_x;
 
-	camera_x = 2 * x / (double)ctx->buffer_game->width - 1;
+	camera_x = 2 * x / (double)ctx->buffer->width - 1;
 	ray->ray_dir.x = ctx->dir + plane.x * camera_x;
 	ray->ray_dir.y = ctx->dir + plane.y * camera_x;
 }

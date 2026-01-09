@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_update.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 12:48:16 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/08 17:12:23 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/09 14:43:22 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 #include <math.h>
 #include <stdbool.h>
 #include <time.h>
+
+#ifndef CLOCK_MONOTONIC
+#define CLOCK_MONOTONIC 1
+#endif
 
 int	render_update_lone(t_renderctx *ctx)
 {
@@ -96,12 +100,12 @@ static void	update_rotation(t_renderctx *ctx, float rot_angle)
 	if (keyboard_is_pressed(ctx->keyboard, XK_Right)
 		|| keyboard_is_pressed(ctx->keyboard, XK_e))
 		ctx->dir += rot_angle;
-	center_pos = v2i(ctx->buffer_game->width / 2, ctx->buffer_game->height / 2);
-	mlx_mouse_get_pos(ctx->mlx, ctx->win_game, &current_pos.x, &current_pos.y);
+	center_pos = v2i(ctx->buffer->width / 2, ctx->buffer->height / 2);
+	mlx_mouse_get_pos(ctx->mlx, ctx->win, &current_pos.x, &current_pos.y);
 	delta.x = (float)(current_pos.x - center_pos.x);
 	delta.y = (float)(current_pos.y - center_pos.y);
 	ctx->dir += delta.x * 0.002f;
-	mlx_mouse_move(ctx->mlx, ctx->win_game, center_pos.x, center_pos.y);
+	mlx_mouse_move(ctx->mlx, ctx->win, center_pos.x, center_pos.y);
 }
 
 void	render_update(t_renderctx *ctx, float delta_time)

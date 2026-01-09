@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_frame.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:40:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/08 16:46:45 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/09 14:26:28 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	render_frame(t_renderctx *ctx)
 	t_raycast	ray;
 
 	i = 0;
-	while (i < ctx->buffer_game->width)
+	while (i < ctx->buffer->width)
 	{
 		ray = raycast_from_ctx(ctx, i);
 		render_column(ctx, i, &ray);

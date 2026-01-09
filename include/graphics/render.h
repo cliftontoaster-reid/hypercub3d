@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 12:28:25 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/08 16:43:30 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/09 14:34:38 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 
 #define RAYCAST_MAX_RAYS 2160
 #define RENDER_FOV_DEG 66.0f
+#define WIN_WIDTH 800
+#define WIN_HEIGHT 600
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
@@ -77,16 +79,14 @@ typedef struct s_rendertiming
  */
 typedef struct s_renderctx
 {
-	t_image			*buffer_game;
-	t_image			*buffer_minimap;
+	t_image			*buffer;
 
 	t_table			*map;
 	t_vec2			pos;
 	float			dir;
 
 	void			*mlx;
-	void			*win_game;
-	void			*win_minimap;
+	void			*win;
 
 	t_key_state		*keyboard;
 	t_mouse_state	*mouse;

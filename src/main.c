@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:25:00 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/08 12:48:17 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/09 14:54:52 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,8 @@ int	main(int argc, char const *argv[])
 		return (1);
 	}
 	string_free(content);
-	render = render_init(map, v2i(800, 600));
+	render = render_init(map, v2i(WIN_WIDTH, WIN_HEIGHT));
 	(void)render;
-	// window = malloc(sizeof(t_window));
-	// all = malloc(sizeof(t_holy_cow));
-	// all->map = map;
-	// all->window = window;
 	printf("Map loaded successfully: %zux%zu\n", map->width, map->height);
-	// init_window(all);
-	// table_free(map);
 	return (0);
 }

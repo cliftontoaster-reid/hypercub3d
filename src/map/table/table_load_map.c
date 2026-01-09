@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   table_load_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 14:04:51 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/08 17:07:16 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/09 14:30:39 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ bool	table_load_map(t_table *table, const char *map)
 				table->player_pos.x = x;
 				table->player_pos.y = y;
 				if (map[i] == TABLE_CELL_PLAYER_N)
-					table->player_dir = 0;
+					table->player_dir = -(float)(M_PI / 2);
 				else if (map[i] == TABLE_CELL_PLAYER_S)
-					table->player_dir = (float)M_PI;
-				else if (map[i] == TABLE_CELL_PLAYER_E)
 					table->player_dir = (float)(M_PI / 2);
+				else if (map[i] == TABLE_CELL_PLAYER_E)
+					table->player_dir = 0;
 				else if (map[i] == TABLE_CELL_PLAYER_W)
-					table->player_dir = (float)(3 * M_PI / 2);
+					table->player_dir = (float)(M_PI);
 				player_found = true;
 			}
 			else
