@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 12:48:16 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 15:19:07 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/09 16:11:24 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	render_update_lone(t_renderctx *ctx)
 	delta_time_sec = (current_time.tv_sec - ctx->last_frame_time.tv_sec)
 		+ (current_time.tv_nsec - ctx->last_frame_time.tv_nsec) / 1000000000.0f;
 	ctx->last_frame_time = current_time;
+	image_clear(ctx->buffer, rgb(0, 0, 0));
 	render_update(ctx, delta_time_sec);
 	render_frame(ctx);
 	render_present(ctx);

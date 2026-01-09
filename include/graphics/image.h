@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   image.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 15:54:47 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/08 14:58:57 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/09 16:07:21 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include "graphics/colour.h"
 #include "utils/vec.h"
 #include <stddef.h>
 
@@ -27,16 +28,6 @@ typedef struct s_pos
 	t_vec2i	src_size;
 	t_vec2i	size;
 }			t_pos;
-
-/**
- * @enum e_endianess
- * @brief Specifies the byte order for pixel data.
- */
-typedef enum e_endianess
-{
-	ENDIAN_LITTLE = 0,
-	ENDIAN_BIG = 1
-}			t_endianess;
 
 /**
  * @struct s_image
@@ -90,9 +81,9 @@ void		image_free(t_image *img);
 /**
  * @brief Clears an image by filling it with a single color.
  * @param img The image to clear.
- * @param color The color to fill the image with.
+ * @param colour The color to fill the image with.
  */
-void		image_clear(t_image *img, int color);
+void		image_clear(t_image *img, t_colour colour);
 
 /**
  * @brief Copies a rectangular area from one image to another.
@@ -101,6 +92,9 @@ void		image_clear(t_image *img, int color);
  * @param pos Defines the source and destination rectangles.
  */
 void		image_blit(t_image *dest, t_image *src, t_pos *pos);
+
+void		image_blit_col(t_image *dest, t_image *src, t_vec2i x, float scale);
+
 /* Pixel operations */
 /**
  * @brief Puts a pixel of a specified color at a given coordinate in an image.

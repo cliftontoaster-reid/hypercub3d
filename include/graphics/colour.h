@@ -3,17 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   colour.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 18:40:50 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/08 14:58:27 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/09 16:08:20 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include "graphics/image.h"
 #include <stdint.h>
+
+/**
+ * @enum e_endianess
+ * @brief Specifies the byte order for pixel data.
+ */
+typedef enum e_endianess
+{
+	ENDIAN_LITTLE = 0,
+	ENDIAN_BIG = 1
+}						t_endianess;
 
 /**
  * @struct s_colour
