@@ -6,12 +6,13 @@
 /*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:25:00 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/22 15:31:44 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/08 12:48:17 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map/table.h"
+#include "graphics/render.h"
 #include "map/minimap.h"
+#include "map/table.h"
 #include "utils/string.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,9 +21,10 @@ int	main(int argc, char const *argv[])
 {
 	t_string	*content;
 	t_table		*map;
-	t_window	*window;
-	t_holy_cow	*all;
+	t_renderctx	*render;
 
+	// t_window	*window;
+	// t_holy_cow	*all;
 	if (argc != 2)
 	{
 		fprintf(stderr, "Usage: %s <map_file>\n", argv[0]);
@@ -42,12 +44,14 @@ int	main(int argc, char const *argv[])
 		return (1);
 	}
 	string_free(content);
-	window = malloc(sizeof(t_window));
-	all = malloc(sizeof(t_holy_cow));
-	all->map = map;
-	all->window = window;
+	render = render_init(map, v2i(800, 600));
+	(void)render;
+	// window = malloc(sizeof(t_window));
+	// all = malloc(sizeof(t_holy_cow));
+	// all->map = map;
+	// all->window = window;
 	printf("Map loaded successfully: %zux%zu\n", map->width, map->height);
-	init_window(all);
+	// init_window(all);
 	// table_free(map);
 	return (0);
 }

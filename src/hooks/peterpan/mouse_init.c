@@ -50,5 +50,7 @@ t_mouse_state	*mouse_init(void *mlx, void *win)
 	mlx_hook(win, EVENT_MOUSE_MOVE, MASK_MOUSE_MOVE, mouse_move_callback, m);
 	mlx_hook(win, EVENT_MOUSE_PRESS, MASK_MOUSE_PRESS, mouse_yes, m);
 	mlx_hook(win, EVENT_MOUSE_RELEASE, MASK_MOUSE_RELEASE, mouse_no, m);
+	m->mlx = mlx;
+	m->win = win;
 	return (m);
 }

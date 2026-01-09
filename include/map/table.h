@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   table.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 14:03:27 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/10 13:26:28 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/08 15:35:46 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_table
 	size_t		height;
 
 	t_vec2i		player_pos;
+	float		player_dir;
 
 	t_image		*no_wall;
 	t_image		*so_wall;
