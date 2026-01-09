@@ -27,20 +27,24 @@ int	main(int argc, char const *argv[])
 	// t_holy_cow	*all;
 	if (argc != 2)
 	{
-		fprintf(stderr, "Usage: %s <map_file>\n", argv[0]);
+		fputs("Usage: ", stderr);
+		fputs(argv[0], stderr);
+		fputs(" <map_file>\n", stderr);
 		return (1);
 	}
 	content = string_from_file(argv[1]);
 	if (!content)
 	{
-		fprintf(stderr, "Error: Failed to read map file '%s'\n", argv[1]);
+		fputs("Error: Failed to read map file '", stderr);
+		fputs(argv[1], stderr);
+		fputs("'\n", stderr);
 		return (1);
 	}
 	map = table_load(content->data);
 	if (!map)
 	{
 		string_free(content);
-		fprintf(stderr, "Error: Failed to load map\n");
+		fputs("Error: Failed to load map\n", stderr);
 		return (1);
 	}
 	string_free(content);
