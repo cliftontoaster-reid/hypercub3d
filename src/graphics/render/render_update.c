@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 12:48:16 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/06 15:02:29 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/09 16:44:41 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,42 @@
 #include "mlx.h"
 #include <math.h>
 #include <stdbool.h>
+#include <time.h>
+
+#ifndef CLOCK_MONOTONIC
+# define CLOCK_MONOTONIC 1
+#endif
+
+int	render_update_lone(t_renderctx *ctx)
+{
+	struct timespec	current_time;
+	struct timespec	wait_time;
+	float			delta_time_sec;
+
+	clock_gettime(CLOCK_MONOTONIC, &current_time);
+	delta_time_sec = (current_time.tv_sec - ctx->last_frame_time.tv_sec)
+		+ (current_time.tv_nsec - ctx->last_frame_time.tv_nsec) / 1000000000.0f;
+	ctx->last_frame_time = current_time;
+	image_clear(ctx->buffer, rgb(0, 0, 0));
+	render_update(ctx, delta_time_sec);
+	render_frame(ctx);
+	render_present(ctx);
+	// wait 16ms
+	while (true)
+	{
+		clock_gettime(CLOCK_MONOTONIC, &current_time);
+		wait_time.tv_sec = current_time.tv_sec - ctx->last_frame_time.tv_sec;
+		wait_time.tv_nsec = current_time.tv_nsec - ctx->last_frame_time.tv_nsec;
+		if (wait_time.tv_nsec < 0)
+		{
+			wait_time.tv_sec -= 1;
+			wait_time.tv_nsec += 1000000000;
+		}
+		if (wait_time.tv_sec > 0 || wait_time.tv_nsec >= 16000000)
+			break ;
+	}
+	return (0);
+}
 
 #ifdef COLLISION
 
@@ -52,36 +88,49 @@ static void	update_position(t_renderctx *ctx, float move_dst)
 
 	delta = vec2_new(0.0f, 0.0f);
 	if (keyboard_is_pressed(ctx->keyboard, XK_w))
-		delta.x += move_dst;
-	if (keyboard_is_pressed(ctx->keyboard, XK_s))
-		delta.x -= move_dst;
-	if (keyboard_is_pressed(ctx->keyboard, XK_a))
 		delta.y += move_dst;
-	if (keyboard_is_pressed(ctx->keyboard, XK_d))
+	if (keyboard_is_pressed(ctx->keyboard, XK_Shift_L))
+		delta.y *= 2.0f;
+	if (keyboard_is_pressed(ctx->keyboard, XK_s))
 		delta.y -= move_dst;
-	cos_dir = cosf(*ctx->dir);
-	sin_dir = sinf(*ctx->dir);
-	rotated_delta.x = delta.x * cos_dir - delta.y * sin_dir;
-	rotated_delta.y = delta.x * sin_dir + delta.y * cos_dir;
-	new_pos = vec2_add(*ctx->pos, rotated_delta);
+	if (keyboard_is_pressed(ctx->keyboard, XK_a))
+		delta.x -= move_dst;
+	if (keyboard_is_pressed(ctx->keyboard, XK_d))
+		delta.x += move_dst;
+	cos_dir = cosf(ctx->dir);
+	sin_dir = sinf(ctx->dir);
+	rotated_delta.x = delta.x * cos_dir + delta.y * sin_dir;
+	rotated_delta.y = delta.x * sin_dir - delta.y * cos_dir;
+	new_pos = vec2_add(ctx->pos, rotated_delta);
 	if (can_move(ctx, &new_pos))
-		*ctx->pos = new_pos;
+		ctx->pos = new_pos;
 }
 
 static void	update_rotation(t_renderctx *ctx, float rot_angle)
 {
-	t_vec2	mouse_delta;
+	t_vec2i	current_pos;
+	t_vec2i	center_pos;
+	t_vec2	delta;
+	float	mouse_sensitivity;
+	float	deadzone;
 
 	if (keyboard_is_pressed(ctx->keyboard, XK_Left)
 		|| keyboard_is_pressed(ctx->keyboard, XK_q))
-		*ctx->dir -= rot_angle;
+		ctx->dir -= rot_angle;
 	if (keyboard_is_pressed(ctx->keyboard, XK_Right)
 		|| keyboard_is_pressed(ctx->keyboard, XK_e))
-		*ctx->dir += rot_angle;
-	mouse_delta = mouse_get_delta(ctx->mouse);
-	*ctx->dir += mouse_delta.x * 0.002f;
-	mouse_reset_delta(ctx->mouse, ctx->mlx, ctx->win, v2i(ctx->buffer->width,
-			ctx->buffer->height));
+		ctx->dir += rot_angle;
+	center_pos = v2i(ctx->buffer->width / 2, ctx->buffer->height / 2);
+	mlx_mouse_get_pos(ctx->mlx, ctx->win, &current_pos.x, &current_pos.y);
+	delta.x = (float)(current_pos.x - center_pos.x);
+	delta.y = (float)(current_pos.y - center_pos.y);
+	deadzone = 2.0f;
+	if (fabsf(delta.x) < deadzone)
+		delta.x = 0.0f;
+	mouse_sensitivity = 0.0008f;
+	ctx->dir += delta.x * mouse_sensitivity;
+	if (fabsf(delta.x) > deadzone || fabsf(delta.y) > deadzone)
+		mlx_mouse_move(ctx->mlx, ctx->win, center_pos.x, center_pos.y);
 }
 
 void	render_update(t_renderctx *ctx, float delta_time)
@@ -89,7 +138,7 @@ void	render_update(t_renderctx *ctx, float delta_time)
 	float	move_speed;
 	float	rot_angle;
 
-	move_speed = 0.2f;
+	move_speed = 0.4f;
 	rot_angle = 0.05f;
 	update_position(ctx, move_speed * delta_time);
 	update_rotation(ctx, rot_angle);

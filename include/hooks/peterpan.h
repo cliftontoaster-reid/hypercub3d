@@ -62,6 +62,9 @@ typedef struct s_mouse_state
 	t_vec2		pos;
 	t_vec2		delta;
 	bool		buttons[8];
+
+	void		*mlx;
+	void		*win;
 }				t_mouse_state;
 
 t_mouse_state	*mouse_init(void *mlx, void *win);

@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:10:48 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/10 13:39:00 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/09 15:13:27 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ size_t	find_last_empty_row(const char *content)
 	return (0);
 }
 
-t_table	*table_load(const char *content)
+t_table	*table_load(const char *content, void *mlx)
 {
 	t_table		*table;
 	size_t		last_row;
@@ -89,7 +89,7 @@ t_table	*table_load(const char *content)
 		if (*ptr == '\n')
 			ptr++;
 	}
-	table = table_new(width, height);
+	table = table_new(width, height, mlx);
 	if (!table)
 	{
 		free(options);

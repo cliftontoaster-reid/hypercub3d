@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:34:35 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/06 15:02:30 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/08 15:24:42 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_raycast
 
 void						calculate_hit(t_raycast *ray, t_rayhit *hit,
 								t_rayside side);
-void						perform_dda(t_raycast *ray, bool **map,
+void						perform_dda(t_raycast *ray, char **map,
 								t_rayside *side);
 void						set_side_capitalist(t_raycast *ray, t_rayside side,
 								t_rayhit *hit);
@@ -68,5 +68,6 @@ void						set_side_communist(t_raycast *ray, t_rayside side,
 t_raycast					*raycast_init(t_rayoptions *options,
 								t_table *map_table, int x);
 void						raycast_dda(t_renderctx *ctx, t_raycast *raycast,
-								bool **map, t_rayhit *rayhit);
+								char **map, t_rayhit *rayhit);
 void						raycast_free(t_raycast *raycast);
+t_raycast					raycast_from_ctx(t_renderctx *ctx, int x);

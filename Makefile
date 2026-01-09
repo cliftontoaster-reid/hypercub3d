@@ -309,9 +309,9 @@ format:
 	@find $(SRC_DIR) $(INC_DIR) $(TEST_DIR) -type f \( -name '*.c' -o -name '*.h' \) -exec clang-format -i {} +
 	@echo "Source files formatted."
 
-compile_commands.json: Makefile $(SRC) $(INC)
+compile_commands.json: Makefile $(SRC) $(INC) $(MLX_ARCHIVE) $(LIB42_ARCHIVE)
 	@echo "Generating compile_commands.json ..."
-	@bear -- $(MAKE) fclean all CC=clang
+	@bear -- $(MAKE) fclean all CC=clang VERBOSE=1
 	@echo "compile_commands.json generated."
 
 make_perf_maps: $(TMP_DIR)/genMap
@@ -322,10 +322,13 @@ make_perf_maps: $(TMP_DIR)/genMap
 	done
 	@echo "Performance maps generated in $(TARGET_DIR)/maps."
 
-tidy: 
+tidy: compile_commands.json
 # Runs clang-tidy on all source files
 	@echo "Running clang-tidy on source files..."
-	@find $(SRC_DIR) -type f -name '*.c' | xargs clang-tidy -p=$(OFFICE_DIR)
+	@command -v clang-tidy >/dev/null 2>&1 || { echo "clang-tidy not found, skipping."; exit 0; }
+	@for f in $(shell find $(SRC_DIR) -type f -name '*.c'); do \
+		clang-tidy "$$f" -p=. -- $(INCLUDE) || true; \
+		done
 	@echo "clang-tidy analysis complete."
 
 bonus:

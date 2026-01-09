@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_dda.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:59:33 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/06 14:59:48 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/08 15:24:19 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #ifdef DEBUG
 
-void	raycast_dda(t_renderctx *ctx, t_raycast *ray, bool **map, t_rayhit *hit)
+void	raycast_dda(t_renderctx *ctx, t_raycast *ray, char **map, t_rayhit *hit)
 {
 	t_rayside		side;
 	struct timeval	start_time;
@@ -34,7 +34,7 @@ void	raycast_dda(t_renderctx *ctx, t_raycast *ray, bool **map, t_rayhit *hit)
 }
 #else
 
-void	raycast_dda(t_renderctx *ctx, t_raycast *ray, bool **map, t_rayhit *hit)
+void	raycast_dda(t_renderctx *ctx, t_raycast *ray, char **map, t_rayhit *hit)
 {
 	t_rayside	side;
 

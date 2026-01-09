@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:25:00 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/22 15:31:44 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/09 15:15:34 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map/table.h"
+#include "graphics/render.h"
 #include "map/minimap.h"
+#include "map/table.h"
 #include "utils/string.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,34 +21,43 @@ int	main(int argc, char const *argv[])
 {
 	t_string	*content;
 	t_table		*map;
-	t_window	*window;
-	t_holy_cow	*all;
+	t_renderctx	*render;
+	void		*mlx;
 
+	// t_window	*window;
+	// t_holy_cow	*all;
 	if (argc != 2)
 	{
-		fprintf(stderr, "Usage: %s <map_file>\n", argv[0]);
+		fputs("Usage: ", stderr);
+		fputs(argv[0], stderr);
+		fputs(" <map_file>\n", stderr);
 		return (1);
 	}
+	mlx = mlx_init();
 	content = string_from_file(argv[1]);
 	if (!content)
 	{
-		fprintf(stderr, "Error: Failed to read map file '%s'\n", argv[1]);
+		fputs("Error: Failed to read map file '", stderr);
+		fputs(argv[1], stderr);
+		fputs("'\n", stderr);
 		return (1);
 	}
-	map = table_load(content->data);
+	map = table_load(content->data, mlx);
 	if (!map)
 	{
 		string_free(content);
-		fprintf(stderr, "Error: Failed to load map\n");
+		fputs("Error: Failed to load map\n", stderr);
 		return (1);
 	}
 	string_free(content);
-	window = malloc(sizeof(t_window));
-	all = malloc(sizeof(t_holy_cow));
-	all->map = map;
-	all->window = window;
+	render = render_init(map, v2i(WIN_WIDTH, WIN_HEIGHT), mlx);
+	if (!render)
+	{
+		table_free(map);
+		fputs("Error: Failed to initialize render context\n", stderr);
+		return (1);
+	}
+	(void)render;
 	printf("Map loaded successfully: %zux%zu\n", map->width, map->height);
-	init_window(all);
-	// table_free(map);
 	return (0);
 }

@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mouse_update_pos.c                                 :+:      :+:    :+:   */
+/*   image_clear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 16:04:28 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/22 16:04:36 by lfiorell         ###   ########.fr       */
+/*   Created: 2026/01/09 15:48:42 by lfiorell          #+#    #+#             */
+/*   Updated: 2026/01/09 15:49:49 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "hooks/peterpan.h"
-#include "mlx.h"
-#include <stdio.h>
+#include "graphics/colour.h"
+#include "graphics/image.h"
 
-// Updates the mouse position and calculates delta
-void	mouse_update_pos(t_mouse_state *m, int x, int y)
+void	image_clear(t_image *img, t_colour colour)
 {
-	t_vec2	new_pos;
+	int	x;
+	int	y;
+	int	col;
 
-	new_pos.x = (float)x;
-	new_pos.y = (float)y;
-	m->delta.x = new_pos.x - m->pos.x;
-	m->delta.y = new_pos.y - m->pos.y;
-	m->pos = new_pos;
+	col = c(colour);
+	y = 0;
+	while (y < img->height)
+	{
+		x = 0;
+		while (x < img->width)
+		{
+			image_put_pixel(img, x, y, col);
+			x++;
+		}
+		y++;
+	}
 }

@@ -13,6 +13,7 @@
 #include "hooks/peterpan.h"
 #include "mlx.h"
 #include "utils/vec.h"
+#include <stdio.h>
 
 // Resets the mouse movement delta by centering it and updating position
 void	mouse_reset_delta(t_mouse_state *m, void *mlx, void *win,
@@ -24,5 +25,9 @@ void	mouse_reset_delta(t_mouse_state *m, void *mlx, void *win,
 	center_x = win_size.x / 2;
 	center_y = win_size.y / 2;
 	mlx_mouse_move(mlx, win, center_x, center_y);
-	mouse_update_pos(m, center_x, center_y);
+	// Just update the stored position to the center without processing delta
+	m->pos.x = (float)center_x;
+	m->pos.y = (float)center_y;
+	m->delta.x = 0.0f;
+	m->delta.y = 0.0f;
 }

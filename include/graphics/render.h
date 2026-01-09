@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 12:28:25 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/06 15:38:04 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/09 16:35:35 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,34 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <time.h>
 
 #define RAYCAST_MAX_RAYS 2160
-#define RENDER_FOV_DEG 66.0f
+#define RENDER_FOV_DEG 90.0f
+#define WIN_WIDTH 1280
+#define WIN_HEIGHT 720
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
 #endif
 
-inline float	render_fov_rad(void)
+/**
+ * @brief Converts the field of view from degrees to radians.
+ * @return The field of view in radians.
+ */
+static inline float	render_fov_rad(void)
 {
 	return (RENDER_FOV_DEG * (float)M_PI / 180.0f);
 }
 
+/**
+ * @struct s_rendertiming
+ * @brief Holds timing information for rendering, used for performance metrics.
+ *
+ * This structure tracks various timings such as average, min, and max time
+ * per ray, total time for all rays, and image rendering time. It also stores
+ * raw timing data for each ray in the last frame for detailed analysis.
+ */
 typedef struct s_rendertiming
 {
 	/* average time per ray (in microseconds) */
@@ -53,12 +68,22 @@ typedef struct s_rendertiming
 	size_t			next_ray_index;
 }					t_rendertiming;
 
+/**
+ * @struct s_renderctx
+ * @brief The main rendering context for the application.
+ *
+ * This structure holds all the necessary components for rendering the game,
+ * including image buffers, map data, player state (position and direction),
+ * MLX pointers for window management, and input states for keyboard and mouse.
+ * It also includes a debug flag and timing information.
+ */
 typedef struct s_renderctx
 {
 	t_image			*buffer;
+
 	t_table			*map;
-	t_vec2			*pos;
-	float			*dir;
+	t_vec2			pos;
+	float			dir;
 
 	void			*mlx;
 	void			*win;
@@ -68,6 +93,7 @@ typedef struct s_renderctx
 
 	bool			debug_mode;
 	t_rendertiming	timing;
+	struct timespec	last_frame_time;
 }					t_renderctx;
 
 /*
@@ -76,9 +102,10 @@ typedef struct s_renderctx
  * @param map The game map.
  * @param mlx The Minilibx instance.
  * @param win_size The size of the window.
+ * @param mlx The MLX instance pointer.
  * @return The initialized render context if successful, NULL otherwise.
  */
-t_renderctx			*render_init(t_table *map, void *mlx, t_vec2i win_size);
+t_renderctx			*render_init(t_table *map, t_vec2i win_size, void *mlx);
 
 /*
  * @brief Updates the player's movement and rotation based on input.
@@ -87,6 +114,7 @@ t_renderctx			*render_init(t_table *map, void *mlx, t_vec2i win_size);
  *        for frame-rate independent movement.
  */
 void				render_update(t_renderctx *ctx, float delta_time);
+int					render_update_lone(t_renderctx *ctx);
 
 /*
  * @brief Renders a single frame of the game scene into the buffer.
@@ -118,15 +146,70 @@ void				render_free(t_renderctx *ctx);
  * - etc.
  */
 void				render_debug(t_renderctx *ctx);
+
+/*
+ * @brief Adds a raycast timing sample to the render timing statistics.
+ *
+ * This is used for performance monitoring and debugging.
+ *
+ * @param t The render timing statistics.
+ * @param time The time taken by the raycast.
+ */
 void				rendertiming_add_ray(t_rendertiming *t, double time);
+
+/*
+ * @brief Sets the total time taken by all raycasts in the last frame.
+ *
+ * This is used for performance monitoring and debugging.
+ *
+ * @param t The render timing statistics.
+ * @param time The total time for all raycasts.
+ */
 void				rendertiming_set_all_rays(t_rendertiming *t, double time);
+
+/*
+ * @brief Sets the time taken to render the image.
+ *
+ * This does not include the time taken for raycasting.
+ * This is used for performance monitoring and debugging.
+ *
+ * @param t The render timing statistics.
+ * @param time The time taken to render the image.
+ */
 void				rendertiming_set_render(t_rendertiming *t, double time);
+
+/*
+ * @brief Resets the render timing statistics for the next frame.
+ * @param timing The render timing statistics to reset.
+ */
 void				rendertiming_reset(t_rendertiming *timing);
 
 #ifdef DEBUG
 
+/*
+ * @brief Renders a debug timeline of the rendering process.
+ *
+ * This helps visualize the time taken by different parts of the rendering.
+ *
+ * @param ctx The render context.
+ */
 void				render_debug_timeline(t_renderctx *ctx);
+
+/*
+ * @brief Renders the raycast rays on the minimap for debugging.
+ * @param ctx The render context.
+ * @param minimap The minimap image to draw on.
+ */
 void				render_debug_rays(t_renderctx *ctx, t_image *minimap);
+
+/*
+ * @brief Renders player information on the minimap for debugging.
+ *
+ * This can include position, direction, etc.
+ *
+ * @param ctx The render context.
+ * @param minimap The minimap image to draw on.
+ */
 void				render_debug_player(t_renderctx *ctx, t_image *minimap);
 
 #endif
