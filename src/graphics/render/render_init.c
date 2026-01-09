@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 12:40:50 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 14:59:27 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/09 15:14:59 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,9 @@ void	init_window(t_renderctx *render)
 
 static int	create_windows(t_renderctx *ctx, t_vec2i win_size)
 {
-	ctx->mlx = mlx_init();
 	if (!ctx->mlx)
 		return (-1);
-	ctx->win = mlx_new_window(ctx->mlx, win_size.x, win_size.y,
-			"HyperCub3D");
+	ctx->win = mlx_new_window(ctx->mlx, win_size.x, win_size.y, "HyperCub3D");
 	if (!ctx->win)
 		return (-1);
 	return (0);
@@ -55,7 +53,7 @@ static int	create_buffers(t_renderctx *ctx, t_vec2i win_size)
 	return (0);
 }
 
-t_renderctx	*render_init(t_table *map, t_vec2i win_size)
+t_renderctx	*render_init(t_table *map, t_vec2i win_size, void *mlx)
 {
 	t_renderctx	*ctx;
 
@@ -64,6 +62,7 @@ t_renderctx	*render_init(t_table *map, t_vec2i win_size)
 		return (NULL);
 	ft_bzero(ctx, sizeof(t_renderctx));
 	ctx->map = map;
+	ctx->mlx = mlx;
 	ctx->pos.x = (float)map->player_pos.x + 0.5f;
 	ctx->pos.y = (float)map->player_pos.y + 0.5f;
 	ctx->dir = map->player_dir;

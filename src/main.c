@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:25:00 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 14:54:52 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/09 15:15:34 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int argc, char const *argv[])
 	t_string	*content;
 	t_table		*map;
 	t_renderctx	*render;
+	void		*mlx;
 
 	// t_window	*window;
 	// t_holy_cow	*all;
@@ -32,6 +33,7 @@ int	main(int argc, char const *argv[])
 		fputs(" <map_file>\n", stderr);
 		return (1);
 	}
+	mlx = mlx_init();
 	content = string_from_file(argv[1]);
 	if (!content)
 	{
@@ -40,7 +42,7 @@ int	main(int argc, char const *argv[])
 		fputs("'\n", stderr);
 		return (1);
 	}
-	map = table_load(content->data);
+	map = table_load(content->data, mlx);
 	if (!map)
 	{
 		string_free(content);
@@ -48,7 +50,13 @@ int	main(int argc, char const *argv[])
 		return (1);
 	}
 	string_free(content);
-	render = render_init(map, v2i(WIN_WIDTH, WIN_HEIGHT));
+	render = render_init(map, v2i(WIN_WIDTH, WIN_HEIGHT), mlx);
+	if (!render)
+	{
+		table_free(map);
+		fputs("Error: Failed to initialize render context\n", stderr);
+		return (1);
+	}
 	(void)render;
 	printf("Map loaded successfully: %zux%zu\n", map->width, map->height);
 	return (0);

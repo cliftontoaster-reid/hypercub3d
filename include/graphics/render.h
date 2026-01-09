@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 12:28:25 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 14:34:38 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/09 15:15:18 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,10 @@ typedef struct s_renderctx
  * @param map The game map.
  * @param mlx The Minilibx instance.
  * @param win_size The size of the window.
+ * @param mlx The MLX instance pointer.
  * @return The initialized render context if successful, NULL otherwise.
  */
-t_renderctx			*render_init(t_table *map, t_vec2i win_size);
+t_renderctx			*render_init(t_table *map, t_vec2i win_size, void *mlx);
 
 /*
  * @brief Updates the player's movement and rotation based on input.

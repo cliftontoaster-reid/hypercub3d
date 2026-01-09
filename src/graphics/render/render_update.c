@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_update.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 12:48:16 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 14:43:22 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/09 15:19:07 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 #include <time.h>
 
 #ifndef CLOCK_MONOTONIC
-#define CLOCK_MONOTONIC 1
+# define CLOCK_MONOTONIC 1
 #endif
 
 int	render_update_lone(t_renderctx *ctx)
 {
 	struct timespec	current_time;
+	struct timespec	wait_time;
 	float			delta_time_sec;
 
 	clock_gettime(CLOCK_MONOTONIC, &current_time);
@@ -32,6 +33,20 @@ int	render_update_lone(t_renderctx *ctx)
 	render_update(ctx, delta_time_sec);
 	render_frame(ctx);
 	render_present(ctx);
+	// wait 16ms
+	while (true)
+	{
+		clock_gettime(CLOCK_MONOTONIC, &current_time);
+		wait_time.tv_sec = current_time.tv_sec - ctx->last_frame_time.tv_sec;
+		wait_time.tv_nsec = current_time.tv_nsec - ctx->last_frame_time.tv_nsec;
+		if (wait_time.tv_nsec < 0)
+		{
+			wait_time.tv_sec -= 1;
+			wait_time.tv_nsec += 1000000000;
+		}
+		if (wait_time.tv_sec > 0 || wait_time.tv_nsec >= 16000000)
+			break ;
+	}
 	return (0);
 }
 

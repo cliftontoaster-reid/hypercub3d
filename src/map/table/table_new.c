@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:12:22 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/10 13:19:55 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/09 15:12:53 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static bool	table_alloc_cell_data_idx(t_table *table, size_t height,
 	return (true);
 }
 
-t_table	*table_new(size_t width, size_t height)
+t_table	*table_new(size_t width, size_t height, void *mlx)
 {
 	t_table	*table;
 
@@ -77,7 +77,7 @@ t_table	*table_new(size_t width, size_t height)
 		return (NULL);
 	if (!table_alloc_cell_data_idx(table, height, width))
 		return (NULL);
-	table->mlx = mlx_init();
+	table->mlx = mlx;
 	if (table->mlx == NULL)
 	{
 		table_free(table);

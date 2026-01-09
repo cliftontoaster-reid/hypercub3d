@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   table.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 14:03:27 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 15:05:43 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/09 15:13:34 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ typedef struct s_table
 
 size_t			get_longest_row_length(const char *str);
 
-t_table			*table_new(size_t width, size_t height);
-t_table			*table_load(const char *content);
+t_table			*table_new(size_t width, size_t height, void *mlx);
+t_table			*table_load(const char *content, void *mlx);
 void			table_free(t_table *table);
 
 bool			table_is_dynamic(t_table *table, size_t x, size_t y);
