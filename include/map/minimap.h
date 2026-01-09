@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#pragma once
+
 #include "graphics/image.h"
 #include "graphics/render.h"
 #include "hooks/peterpan.h"
@@ -39,7 +41,7 @@ void				init_window(t_renderctx *render);
 // pixel operations are declared in `graphics/image.h`
 
 // display_minimap.c
-void	display_minimap(t_renderctx *ctx);
+void				display_minimap(t_renderctx *ctx);
 
 // key_handler.c
 int					key_handler(int keycode, t_holy_cow *all);
