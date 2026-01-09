@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 12:28:25 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 15:15:18 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/09 16:35:35 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 #include <time.h>
 
 #define RAYCAST_MAX_RAYS 2160
-#define RENDER_FOV_DEG 66.0f
-#define WIN_WIDTH 800
-#define WIN_HEIGHT 600
+#define RENDER_FOV_DEG 90.0f
+#define WIN_WIDTH 1280
+#define WIN_HEIGHT 720
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846

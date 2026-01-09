@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 12:48:16 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 16:11:24 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/09 16:44:41 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ static void	update_position(t_renderctx *ctx, float move_dst)
 	delta = vec2_new(0.0f, 0.0f);
 	if (keyboard_is_pressed(ctx->keyboard, XK_w))
 		delta.y += move_dst;
+	if (keyboard_is_pressed(ctx->keyboard, XK_Shift_L))
+		delta.y *= 2.0f;
 	if (keyboard_is_pressed(ctx->keyboard, XK_s))
 		delta.y -= move_dst;
 	if (keyboard_is_pressed(ctx->keyboard, XK_a))
@@ -109,6 +111,8 @@ static void	update_rotation(t_renderctx *ctx, float rot_angle)
 	t_vec2i	current_pos;
 	t_vec2i	center_pos;
 	t_vec2	delta;
+	float	mouse_sensitivity;
+	float	deadzone;
 
 	if (keyboard_is_pressed(ctx->keyboard, XK_Left)
 		|| keyboard_is_pressed(ctx->keyboard, XK_q))
@@ -120,8 +124,13 @@ static void	update_rotation(t_renderctx *ctx, float rot_angle)
 	mlx_mouse_get_pos(ctx->mlx, ctx->win, &current_pos.x, &current_pos.y);
 	delta.x = (float)(current_pos.x - center_pos.x);
 	delta.y = (float)(current_pos.y - center_pos.y);
-	ctx->dir += delta.x * 0.002f;
-	mlx_mouse_move(ctx->mlx, ctx->win, center_pos.x, center_pos.y);
+	deadzone = 2.0f;
+	if (fabsf(delta.x) < deadzone)
+		delta.x = 0.0f;
+	mouse_sensitivity = 0.0008f;
+	ctx->dir += delta.x * mouse_sensitivity;
+	if (fabsf(delta.x) > deadzone || fabsf(delta.y) > deadzone)
+		mlx_mouse_move(ctx->mlx, ctx->win, center_pos.x, center_pos.y);
 }
 
 void	render_update(t_renderctx *ctx, float delta_time)
@@ -129,7 +138,7 @@ void	render_update(t_renderctx *ctx, float delta_time)
 	float	move_speed;
 	float	rot_angle;
 
-	move_speed = 0.2f;
+	move_speed = 0.4f;
 	rot_angle = 0.05f;
 	update_position(ctx, move_speed * delta_time);
 	update_rotation(ctx, rot_angle);
