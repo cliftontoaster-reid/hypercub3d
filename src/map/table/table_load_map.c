@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   table_load_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 14:04:51 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 15:20:28 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/12 14:03:42 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ bool	table_load_map(t_table *table, const char *map)
 	{
 		if (map[i] == '\n')
 		{
+			table->cells[y][x] = '2';
 			y++;
 			x = 0;
 		}
@@ -79,5 +80,6 @@ bool	table_load_map(t_table *table, const char *map)
 		}
 		i++;
 	}
+	table->cells[y][x] = '2';
 	return (player_found);
 }
