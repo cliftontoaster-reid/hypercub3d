@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   table_new.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:12:22 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 15:12:53 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/12 14:00:10 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static bool	table_alloc_cells(t_table *table, size_t height, size_t width)
 	y = 0;
 	while (y < height)
 	{
-		table->cells[y] = malloc(sizeof(char) * width);
+		table->cells[y] = malloc(sizeof(char) * width + 1);
 		if (table->cells[y] == NULL)
 		{
 			table_free(table);

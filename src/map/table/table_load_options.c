@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   table_load_options.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 13:05:49 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/10 13:05:15 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/12 16:00:56 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,16 @@ static bool	ld(t_image **i, const char *p, t_table *t, bool *c)
 
 static bool	lrgb(t_colour *col, const char *s, t_table *t, bool *c)
 {
+	char	*s_trimmed;
+
 	if (*c)
 	{
 		table_free(t);
 		return (false);
 	}
-	*col = parse_rbg(ft_strtrim(s, " \t"));
+	s_trimmed = ft_strtrim(s, " \t");
+	*col = parse_rbg(s_trimmed);
+	free(s_trimmed);
 	*c = true;
 	return (true);
 }
