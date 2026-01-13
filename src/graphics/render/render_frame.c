@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_frame.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:40:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 16:20:06 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/13 16:50:20 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 static t_image	*get_texture(t_renderctx *ctx, t_rayhit *ray)
 {
-	/* Bounds check before accessing array */
 	if (ray->hit_map.x < 0 || ray->hit_map.x >= (int)ctx->map->width
 		|| ray->hit_map.y < 0 || ray->hit_map.y >= (int)ctx->map->height)
 		return (NULL);
@@ -54,8 +53,6 @@ static void	render_column(t_renderctx *ctx, int x, t_raycast *ray)
 	int			col_x;
 
 	raycast_dda(ctx, ray, ctx->map->cells, &hit);
-	/* reject invalid results (NaN/inf) and very small distances that
-		would make the wall take more than the whole screen */
 	if (!ray->hit || hit.hit_side == RAY_SIDE_NONE || !isfinite(hit.dist)
 		|| hit.dist <= 1e-4f)
 	{
@@ -68,8 +65,6 @@ static void	render_column(t_renderctx *ctx, int x, t_raycast *ray)
 		error_column(ctx, x);
 		return ;
 	}
-	/* compute scale as reciprocal distance; very close walls will produce
-		scale > 1, which we handle in image_blit_col by clamping */
 	scale = 1 / hit.dist;
 	col_x = (int)floorf(hit.hit_pos * (float)(texture->width));
 	image_blit_col(ctx->buffer, texture, vec2i_new(col_x, x), scale);
@@ -87,6 +82,5 @@ void	render_frame(t_renderctx *ctx)
 		render_column(ctx, i, &ray);
 		i++;
 	}
-	// Render minimap
 	display_minimap(ctx);
 }

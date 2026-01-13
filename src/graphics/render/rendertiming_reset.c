@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rendertiming_reset.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 14:55:31 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/07 11:29:37 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/13 15:44:55 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graphics/render.h"
-
 
 void	rendertiming_reset(t_rendertiming *timing)
 {
