@@ -6,10 +6,11 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 15:40:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/13 16:50:20 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/13 12:36:48 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "graphics/colour.h"
 #include "graphics/image.h"
 #include "graphics/render.h"
 #include "map/minimap.h"
@@ -31,6 +32,34 @@ static t_image	*get_texture(t_renderctx *ctx, t_rayhit *ray)
 			return (ctx->map->we_wall);
 	}
 	return (NULL);
+}
+
+static void	fill_ceiling_floor(t_renderctx *ctx, int x, float scale)
+{
+	int		rendered_height;
+	int		start_y;
+	int		y;
+	int		ceiling_color;
+	int		floor_color;
+
+	rendered_height = (int)(scale * (float)ctx->buffer->height);
+	if (rendered_height >= ctx->buffer->height)
+		return ;
+	start_y = (ctx->buffer->height - rendered_height) / 2;
+	ceiling_color = c(ctx->map->ceil_col);
+	floor_color = c(ctx->map->floor_col);
+	y = 0;
+	while (y < start_y)
+	{
+		image_put_pixel(ctx->buffer, x, y, ceiling_color);
+		y++;
+	}
+	y = start_y + rendered_height;
+	while (y < ctx->buffer->height)
+	{
+		image_put_pixel(ctx->buffer, x, y, floor_color);
+		y++;
+	}
 }
 
 static void	error_column(t_renderctx *ctx, int x)
@@ -68,6 +97,7 @@ static void	render_column(t_renderctx *ctx, int x, t_raycast *ray)
 	scale = 1 / hit.dist;
 	col_x = (int)floorf(hit.hit_pos * (float)(texture->width));
 	image_blit_col(ctx->buffer, texture, vec2i_new(col_x, x), scale);
+	fill_ceiling_floor(ctx, x, scale);
 }
 
 void	render_frame(t_renderctx *ctx)

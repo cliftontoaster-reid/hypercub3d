@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 15:42:10 by mbores            #+#    #+#             */
-/*   Updated: 2026/01/13 14:15:45 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/13 12:40:16 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ static void	put_squares_on_map(t_renderctx *all, int minimap_x, int minimap_y,
 		{
 			if (all->map->cells[v[1]][v[0]] == '2')
 				break ;
-			if (all->map->cells[v[1]][v[0]] == '0')
-				put_pix_in_sq(all->buffer, all->map->floor_col, v[2], v[3]);
-			else if (all->map->cells[v[1]][v[0]] == '1')
-				put_pix_in_sq(all->buffer, all->map->ceil_col, v[2], v[3]);
-			v[0]++;
-			v[2]++;
+			if (all->map->cells[y][x] == '0')
+				put_pixels_in_square(all->buffer, all->map->floor_col, i, j);
+			else if (all->map->cells[y][x] == '1')
+				put_pixels_in_square(all->buffer, rgb(0, 0, 0), i, j);
+			x++;
+			i++;
 		}
 		v[2] = 0;
 		v[0] = minimap_x;
