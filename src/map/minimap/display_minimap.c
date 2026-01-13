@@ -13,7 +13,7 @@
 #include "graphics/colour.h"
 #include "map/minimap.h"
 
-static void	put_pixels_in_square(t_image *img, t_colour color, int x, int y)
+static void	put_pix_in_sq(t_image *img, t_colour color, int x, int y)
 {
 	int	xx;
 	int	yy;
@@ -41,8 +41,8 @@ static void	player_square(t_renderctx *ctx, float x, float y)
 
 	xx = 0;
 	yy = 0;
-	px = (int)x;
-	py = (int)y;
+	px = (int)((x - 0.5) * 32);
+	py = (int)((y - 0.5) * 32);
 	while (yy < 5)
 	{
 		while (xx < 5)
@@ -57,26 +57,19 @@ static void	player_square(t_renderctx *ctx, float x, float y)
 }
 
 static void	put_squares_on_map(t_renderctx *all, int minimap_x, int minimap_y,
-		t_vec2 player_pos)
+	t_vec2 player_pos)
 {
-	size_t	x;
-	size_t	y;
-	size_t	i;
-	size_t	j;
-	float	player_px;
-	float	player_py;
+	size_t	v[4];
 
-	x = minimap_x;
-	y = minimap_y;
-	i = 0;
-	j = 0;
-	player_px = ((player_pos.x - minimap_x) - 0.5) * 32;
-	player_py = ((player_pos.y - minimap_y) - 0.5) * 32;
-	while (j < 9 && y < all->map->height)
+	v[0] = minimap_x;
+	v[1] = minimap_y;
+	v[2] = 0;
+	v[3] = 0;
+	while (v[3] < 9 && v[1] < all->map->height)
 	{
-		while (i < 9 && x < all->map->width)
+		while (v[2] < 9 && v[0] < all->map->width)
 		{
-			if (all->map->cells[y][x] == '2')
+			if (all->map->cells[v[1]][v[0]] == '2')
 				break ;
 			if (all->map->cells[y][x] == '0')
 				put_pixels_in_square(all->buffer, all->map->floor_col, i, j);
@@ -85,12 +78,12 @@ static void	put_squares_on_map(t_renderctx *all, int minimap_x, int minimap_y,
 			x++;
 			i++;
 		}
-		i = 0;
-		x = minimap_x;
-		y++;
-		j++;
+		v[2] = 0;
+		v[0] = minimap_x;
+		v[1]++;
+		v[3]++;
 	}
-	player_square(all, player_px, player_py);
+	player_square(all, (player_pos.x - minimap_x), (player_pos.y - minimap_y));
 }
 
 void	display_minimap(t_renderctx *ctx)

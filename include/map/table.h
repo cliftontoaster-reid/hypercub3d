@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   table.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 14:03:27 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 15:13:34 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/13 14:50:16 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,26 @@ typedef struct s_table
 	void		*mlx;
 }				t_table;
 
+typedef struct s_parse_ctx
+{
+	size_t		x;
+	size_t		y;
+	bool		player_found;
+}				t_parse_ctx;
+
+typedef struct s_opt_ctx
+{
+	bool		no;
+	bool		so;
+	bool		we;
+	bool		ea;
+	bool		f;
+	bool		c;
+}				t_opt_ctx;
+
 size_t			get_longest_row_length(const char *str);
+
+size_t			find_last_empty_row(const char *content);
 
 t_table			*table_new(size_t width, size_t height, void *mlx);
 t_table			*table_load(const char *content, void *mlx);
@@ -65,6 +84,13 @@ bool			table_is_walkable(t_table *table, size_t x, size_t y);
 void			*table_get_cell_data(t_table *table, size_t x, size_t y);
 bool			table_set_player_pos(t_table *table, size_t x, size_t y);
 t_vec2i			table_get_player_pos(t_table *table);
+
+bool			is_valid_cell_char(char c);
+bool			is_player_char(char c);
+
+t_colour		parse_rbg(const char *str);
+bool			ld(t_image **i, const char *p, t_table *t, bool *c);
+bool			lrgb(t_colour *col, const char *s, t_table *t, bool *c);
 
 bool			table_load_options(t_table *table, const char *options);
 bool			table_load_map(t_table *table, const char *map);

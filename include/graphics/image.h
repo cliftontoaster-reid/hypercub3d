@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 15:54:47 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 16:07:21 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/13 15:12:16 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "graphics/colour.h"
 #include "utils/vec.h"
 #include <stddef.h>
+#include <stdbool.h>
 
 /**
  * @struct s_pos
@@ -54,6 +55,23 @@ typedef struct s_image
 	/// @brief The endianess of the image data
 	int		endian;
 }			t_image;
+
+typedef struct s_blit_ctx
+{
+	t_image	*dest;
+	t_image	*src;
+	t_pos	*pos;
+}			t_blit_ctx;
+
+typedef struct s_col_blit
+{
+	t_image	*dest;
+	t_image	*src;
+	t_vec2i	src_pos;
+	t_vec2i	range;
+	float	src_crop_start;
+	float	src_crop_height;
+}			t_col_blit;
 
 /**
  * @brief Creates a new, empty image.

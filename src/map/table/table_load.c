@@ -3,113 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   table_load.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:10:48 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 15:13:27 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/13 14:30:52 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "map/table.h"
 
-size_t	find_last_empty_row(const char *content)
+static bool	split_content(const char *content, char **opt, char **map)
 {
-	size_t		current_idx;
-	const char	*ptr = content;
-	size_t		len;
-	bool		is_empty;
-	size_t		pos;
+	size_t	pos;
 
-	if (content == NULL)
-		return (0);
-	current_idx = 0;
-	while (*ptr)
+	pos = find_last_empty_row(content);
+	if (pos == 0)
+		return (false);
+	*opt = ft_substr(content, 0, pos);
+	*map = ft_substr(content, pos, ft_strlen(content) - pos);
+	if (!*opt || !*map)
+		return (false);
+	return (true);
+}
+
+static size_t	count_rows(const char *s)
+{
+	size_t	count;
+
+	count = 0;
+	while (*s)
 	{
-		len = 0;
-		is_empty = true;
-		while (ptr[len] && ptr[len] != '\n')
-		{
-			if (!ft_ciswhite((unsigned char)ptr[len]))
-				is_empty = false;
-			len++;
-		}
-		if (is_empty)
-		{
-			pos = current_idx + len;
-			if (ptr[len] == '\n')
-				pos++;
-			if (content[pos] != '\0')
-				return (pos);
-			return (0);
-		}
-		current_idx += len;
-		ptr += len;
-		if (*ptr == '\n')
-		{
-			current_idx++;
-			ptr++;
-		}
+		count++;
+		while (*s && *s != '\n')
+			s++;
+		if (*s == '\n')
+			s++;
 	}
-	return (0);
+	return (count);
+}
+
+static t_table	*create_table_from_map(const char *map, void *mlx)
+{
+	size_t	width;
+	size_t	height;
+
+	width = get_longest_row_length(map);
+	height = count_rows(map);
+	return (table_new(width, height, mlx));
 }
 
 t_table	*table_load(const char *content, void *mlx)
 {
-	t_table		*table;
-	size_t		last_row;
-	char		*options;
-	char		*map;
-	size_t		width;
-	size_t		height;
-	const char	*ptr;
+	t_table	*table;
+	char	*options;
+	char	*map;
 
-	if (content == NULL)
+	if (!content)
 		return (NULL);
-	last_row = find_last_empty_row(content);
-	if (last_row == 0)
+	if (!split_content(content, &options, &map))
 		return (NULL);
-	options = ft_substr(content, 0, last_row);
-	map = ft_substr(content, last_row, ft_strlen(content) - last_row);
-	if (!options || !map)
-	{
-		free(options);
-		free(map);
-		return (NULL);
-	}
-	width = get_longest_row_length(map);
-	/* compute height (number of rows) */
-	height = 0;
-	ptr = map;
-	while (*ptr)
-	{
-		height++;
-		while (*ptr && *ptr != '\n')
-			ptr++;
-		if (*ptr == '\n')
-			ptr++;
-	}
-	table = table_new(width, height, mlx);
+	table = create_table_from_map(map, mlx);
 	if (!table)
-	{
-		free(options);
-		free(map);
-		return (NULL);
-	}
+		return (free(options), free(map), NULL);
 	if (!table_load_options(table, options))
-	{
-		free(options);
-		table_free(table);
-		free(map);
-		return (NULL);
-	}
-	free(options);
+		return (free(options), free(map), table_free(table), NULL);
 	if (!table_load_map(table, map))
-	{
-		free(map);
-		table_free(table);
-		return (NULL);
-	}
+		return (free(options), free(map), table_free(table), NULL);
+	free(options);
 	free(map);
 	return (table);
 }

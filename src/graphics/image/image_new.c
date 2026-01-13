@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image_new.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 16:14:45 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/22 14:13:56 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/13 15:05:41 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_image	*image_new(void *mlx_ptr, int width, int height)
 		free(img);
 		return (NULL);
 	}
-	img->addr = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->lln, &img->endian);
+	img->addr = mlx_get_data_addr(img->img_ptr, &img->bpp,
+			&img->lln, &img->endian);
 	return (img);
 }

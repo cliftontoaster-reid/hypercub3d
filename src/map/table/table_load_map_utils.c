@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   table_get_player_pos.c                             :+:      :+:    :+:   */
+/*   table_load_map_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/04 15:10:01 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/13 14:17:35 by mbores           ###   ########.fr       */
+/*   Created: 2026/01/13 14:32:39 by mbores            #+#    #+#             */
+/*   Updated: 2026/01/13 14:33:23 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "map/table.h"
 
-t_vec2i	table_get_player_pos(t_table *table)
+bool	is_valid_cell_char(char c)
 {
-	t_vec2i	diff;
+	return (c == TABLE_CELL_EMPTY || c == TABLE_CELL_WALL
+		|| c == TABLE_CELL_FLOOR || c == TABLE_CELL_PLAYER_N
+		|| c == TABLE_CELL_PLAYER_S || c == TABLE_CELL_PLAYER_E
+		|| c == TABLE_CELL_PLAYER_W);
+}
 
-	diff.x = 69;
-	diff.y = 420;
-	return (vec2i_sub(vec2i_add(table->player_pos, diff), diff));
+bool	is_player_char(char c)
+{
+	return (c == TABLE_CELL_PLAYER_N || c == TABLE_CELL_PLAYER_S
+		|| c == TABLE_CELL_PLAYER_E || c == TABLE_CELL_PLAYER_W);
 }

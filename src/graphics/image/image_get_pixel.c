@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   image_get_pixel.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 11:03:39 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/05 11:03:43 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/13 15:00:57 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "graphics/image.h"
 
 int	image_get_pixel(t_image *img, int x, int y)
 {
 	unsigned char	*dst;
-	int			color;
+	int				color;
 
 	if (!img || !img->addr)
 		return (0);

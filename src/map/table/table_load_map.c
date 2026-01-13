@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 14:04:51 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/12 14:03:42 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/13 14:39:08 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,68 +18,76 @@
 # define M_PI 3.14159265358979323846
 #endif
 
-static bool	is_valid_cell_char(char c)
+static float	player_dir_from_char(char c)
 {
-	return (c == TABLE_CELL_EMPTY || c == TABLE_CELL_WALL
-		|| c == TABLE_CELL_FLOOR || c == TABLE_CELL_PLAYER_N
-		|| c == TABLE_CELL_PLAYER_S || c == TABLE_CELL_PLAYER_E
-		|| c == TABLE_CELL_PLAYER_W);
+	if (c == TABLE_CELL_PLAYER_N)
+		return (0.0f);
+	if (c == TABLE_CELL_PLAYER_S)
+		return ((float)M_PI);
+	if (c == TABLE_CELL_PLAYER_E)
+		return ((float)(M_PI / 2));
+	if (c == TABLE_CELL_PLAYER_W)
+		return ((float)(3 * M_PI / 2));
+	return (-1.0f);
 }
 
-static bool	is_player_char(char c)
+static bool	handle_player(t_table *t, char c, t_parse_ctx *ctx)
 {
-	return (c == TABLE_CELL_PLAYER_N || c == TABLE_CELL_PLAYER_S
-		|| c == TABLE_CELL_PLAYER_E || c == TABLE_CELL_PLAYER_W);
+	float	dir;
+
+	if (ctx->player_found)
+		return (false);
+	dir = player_dir_from_char(c);
+	if (dir < 0)
+		return (false);
+	t->cells[ctx->y][ctx->x] = '0';
+	t->player_pos.x = ctx->x;
+	t->player_pos.y = ctx->y;
+	t->player_dir = dir;
+	ctx->player_found = true;
+	return (true);
+}
+
+static bool	write_cell(t_table *t, char c, t_parse_ctx *ctx)
+{
+	if (!is_valid_cell_char(c))
+		return (false);
+	if (!t->cells || !t->cells[ctx->y] || ctx->x >= t->width)
+		return (false);
+	if (is_player_char(c))
+		return (handle_player(t, c, ctx));
+	t->cells[ctx->y][ctx->x] = c;
+	return (true);
+}
+
+static void	end_row(t_table *t, t_parse_ctx *ctx)
+{
+	t->cells[ctx->y][ctx->x] = '2';
+	ctx->y++;
+	ctx->x = 0;
 }
 
 bool	table_load_map(t_table *table, const char *map)
 {
-	size_t	i;
-	size_t	y;
-	size_t	x;
-	bool	player_found;
+	t_parse_ctx	ctx;
+	size_t		i;
 
+	ctx.x = 0;
+	ctx.y = 0;
+	ctx.player_found = false;
 	i = 0;
-	y = 0;
-	x = 0;
-	player_found = false;
 	while (map[i])
 	{
 		if (map[i] == '\n')
-		{
-			table->cells[y][x] = '2';
-			y++;
-			x = 0;
-		}
+			end_row(table, &ctx);
 		else
 		{
-			if (!is_valid_cell_char(map[i]))
+			if (!write_cell(table, map[i], &ctx))
 				return (false);
-			if (!table->cells || !table->cells[y] || x >= table->width)
-				return (false);
-			if (is_player_char(map[i]))
-			{
-				if (player_found)
-					return (false);
-				table->cells[y][x] = '0';
-				table->player_pos.x = x;
-				table->player_pos.y = y;
-				if (map[i] == TABLE_CELL_PLAYER_N)
-					table->player_dir = 0;
-				else if (map[i] == TABLE_CELL_PLAYER_S)
-					table->player_dir = (float)(M_PI);
-				else if (map[i] == TABLE_CELL_PLAYER_E)
-					table->player_dir = (float)(M_PI / 2);
-				else if (map[i] == TABLE_CELL_PLAYER_W)
-					table->player_dir = (float)(3 * M_PI / 2);
-				player_found = true;
-			}
-			else
-				table->cells[y][x] = map[i];
-			x++;
+			ctx.x++;
 		}
 		i++;
 	}
-	table->cells[y][x] = '2';
-	return (player_found);
+	table->cells[ctx.y][ctx.x] = '2';
+	return (ctx.player_found);
 }
