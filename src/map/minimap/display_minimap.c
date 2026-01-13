@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 15:42:10 by mbores            #+#    #+#             */
-/*   Updated: 2026/01/12 14:04:12 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/13 12:40:16 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	put_squares_on_map(t_renderctx *all, int minimap_x, int minimap_y,
 			if (all->map->cells[y][x] == '0')
 				put_pixels_in_square(all->buffer, all->map->floor_col, i, j);
 			else if (all->map->cells[y][x] == '1')
-				put_pixels_in_square(all->buffer, all->map->ceil_col, i, j);
+				put_pixels_in_square(all->buffer, rgb(0, 0, 0), i, j);
 			x++;
 			i++;
 		}
