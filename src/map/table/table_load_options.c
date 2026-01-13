@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 13:05:49 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/12 16:00:56 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/13 14:52:20 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,114 +15,107 @@
 #include "libft.h"
 #include "map/table.h"
 
-#define cmp ft_strncmp
+#define CMP ft_strncmp
 
-static t_colour	parse_rbg(const char *str)
+static void	opt_ctx_init(t_opt_ctx *c)
 {
-	t_colour	colour;
-	char		**components;
-
-	components = ft_split(str, ',');
-	if (!components)
-		return ((t_colour){0, 0, 0, 255});
-	colour.r = (uint8_t)ft_atoi(components[0]);
-	colour.g = (uint8_t)ft_atoi(components[1]);
-	colour.b = (uint8_t)ft_atoi(components[2]);
-	colour.a = 255;
-	for (int i = 0; components[i]; i++)
-		free(components[i]);
-	free(components);
-	return (colour);
+	ft_bzero(c, sizeof(t_opt_ctx));
 }
 
-static bool	ld(t_image **i, const char *p, t_table *t, bool *c)
+static bool	opt_ctx_complete(t_opt_ctx *c)
 {
-	char	*p_trimmed;
-
-	if (*c)
-	{
-		table_free(t);
-		return (false);
-	}
-	p_trimmed = ft_strtrim(p, " \t");
-	*i = image_from_file(t->mlx, p_trimmed);
-	free(p_trimmed);
-	if (!*i)
-	{
-		table_free(t);
-		return (false);
-	}
-	*c = true;
-	return (true);
+	return (c->no && c->so && c->we && c->ea && c->f && c->c);
 }
 
-static bool	lrgb(t_colour *col, const char *s, t_table *t, bool *c)
-{
-	char	*s_trimmed;
-
-	if (*c)
-	{
-		table_free(t);
-		return (false);
-	}
-	s_trimmed = ft_strtrim(s, " \t");
-	*col = parse_rbg(s_trimmed);
-	free(s_trimmed);
-	*c = true;
-	return (true);
-}
-
-static bool	check_complete(bool cs[6])
+static void	free_lines(char **lines)
 {
 	int	i;
 
 	i = 0;
-	while (i < 6)
-	{
-		if (!cs[i])
-			return (false);
-		i++;
-	}
-	return (true);
+	while (lines[i])
+		free(lines[i++]);
+	free(lines);
+}
+
+static bool	parse_option_line(t_table *t, char *l, t_opt_ctx *c)
+{
+	if (CMP(l, "NO ", 3) == 0)
+		return (ld(&t->no_wall, l + 3, t, &c->no));
+	if (CMP(l, "SO ", 3) == 0)
+		return (ld(&t->so_wall, l + 3, t, &c->so));
+	if (CMP(l, "WE ", 3) == 0)
+		return (ld(&t->we_wall, l + 3, t, &c->we));
+	if (CMP(l, "EA ", 3) == 0)
+		return (ld(&t->ea_wall, l + 3, t, &c->ea));
+	if (CMP(l, "F ", 2) == 0)
+		return (lrgb(&t->floor_col, l + 2, t, &c->f));
+	if (CMP(l, "C ", 2) == 0)
+		return (lrgb(&t->ceil_col, l + 2, t, &c->c));
+	return (false);
 }
 
 bool	table_load_options(t_table *t, const char *options)
 {
-	char	**lines;
-	int		i;
-	char	*l;
-	bool	cs[6];
+	t_opt_ctx	ctx;
+	char		**lines;
+	int			i;
 
-	ft_bzero(cs, sizeof(cs));
 	if (!t || !options)
 		return (false);
+	opt_ctx_init(&ctx);
 	lines = ft_split(options, '\n');
 	if (!lines)
 		return (false);
 	i = 0;
 	while (lines[i])
 	{
-		l = lines[i];
-		if (cmp(l, "NO ", 3) == 0 && !ld(&t->no_wall, l + 3, t, &cs[0]))
-			return (false);
-		else if (cmp(l, "SO ", 3) == 0 && !ld(&t->so_wall, l + 3, t, &cs[1]))
-			return (false);
-		else if (cmp(l, "WE ", 3) == 0 && !ld(&t->we_wall, l + 3, t, &cs[2]))
-			return (false);
-		else if (cmp(l, "EA ", 3) == 0 && !ld(&t->ea_wall, l + 3, t, &cs[3]))
-			return (false);
-		else if (cmp(l, "F ", 2) == 0 && !lrgb(&t->floor_col, l + 2, t, &cs[4]))
-			return (false);
-		else if (cmp(l, "C ", 2) == 0 && !lrgb(&t->ceil_col, l + 2, t, &cs[5]))
-			return (false);
-		free(l);
+		if (!parse_option_line(t, lines[i], &ctx))
+			return (free_lines(lines), false);
 		i++;
 	}
-	free(lines);
-	if (!check_complete(cs))
-	{
-		table_free(t);
-		return (false);
-	}
+	free_lines(lines);
+	if (!opt_ctx_complete(&ctx))
+		return (table_free(t), false);
 	return (true);
 }
+
+// bool	table_load_options(t_table *t, const char *options)
+// {
+// 	char	**lines;
+// 	int		i;
+// 	char	*l;
+// 	bool	cs[6];
+
+// 	ft_bzero(cs, sizeof(cs));
+// 	if (!t || !options)
+// 		return (false);
+// 	lines = ft_split(options, '\n');
+// 	if (!lines)
+// 		return (false);
+// 	i = 0;
+// 	while (lines[i])
+// 	{
+// 		l = lines[i];
+// 		if (CMP(l, "NO ", 3) == 0 && !ld(&t->no_wall, l + 3, t, &cs[0]))
+// 			return (false);
+// 		else if (CMP(l, "SO ", 3) == 0 && !ld(&t->so_wall, l + 3, t, &cs[1]))
+// 			return (false);
+// 		else if (CMP(l, "WE ", 3) == 0 && !ld(&t->we_wall, l + 3, t, &cs[2]))
+// 			return (false);
+// 		else if (CMP(l, "EA ", 3) == 0 && !ld(&t->ea_wall, l + 3, t, &cs[3]))
+// 			return (false);
+// 		else if (CMP(l, "F ", 2) == 0 && !lrgb(&t->floor_col, l + 2, t, &cs[4]))
+// 			return (false);
+// 		else if (CMP(l, "C ", 2) == 0 && !lrgb(&t->ceil_col, l + 2, t, &cs[5]))
+// 			return (false);
+// 		free(l);
+// 		i++;
+// 	}
+// 	free(lines);
+// 	if (!check_complete(cs))
+// 	{
+// 		table_free(t);
+// 		return (false);
+// 	}
+// 	return (true);
+// }

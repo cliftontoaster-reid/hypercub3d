@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syn_run_torrentrefill.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:14:59 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/05 11:29:55 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/13 14:16:30 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static bool	syn_visit_disneyland(t_torrentrefill *refill, t_vec2i pos)
 		return (false);
 	if (refill->desk->cells[pos.y][pos.x] != '0')
 		return (true);
-	// Add neighboring positions to to_refill list
 	syn_throw_pos_eternal_hell(refill, v2i(pos.x + 1, pos.y));
 	syn_throw_pos_eternal_hell(refill, v2i(pos.x - 1, pos.y));
 	syn_throw_pos_eternal_hell(refill, v2i(pos.x, pos.y + 1));
