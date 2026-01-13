@@ -2,8 +2,8 @@ NO ./assets/textures/backroom_wall.xpm
 SO ./assets/textures/backroom_wall.xpm
 WE ./assets/textures/backroom_wall.xpm
 EA ./assets/textures/backroom_wall.xpm
-F 255,255,143
-C 225,193,110
+F 185,160,80
+C 235,235,160
 
         1111111111111111111111111
         1000000000110000000000001
