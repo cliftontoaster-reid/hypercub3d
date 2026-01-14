@@ -12,7 +12,7 @@
 
 #include "utils/mlx.h"
 
-void	free_window_list(t_my_xvar *mlx)
+static void	free_window_list(t_my_xvar *mlx)
 {
 	t_my_win_list	*w;
 	t_my_win_list	*next;
