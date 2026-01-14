@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 11:47:48 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/03 18:54:21 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:09:46 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ static size_t	compute_new_capacity(size_t current, size_t min_capacity)
 
 	if (min_capacity > (size_t)SIZE_MAX - 1)
 		return (0);
-	new_capacity = (current == 0) ? 1 : current;
+	new_capacity = current;
+	if (new_capacity == 0)
+		new_capacity = 1;
 	while (new_capacity < min_capacity)
 	{
 		if (new_capacity > ((size_t)SIZE_MAX - 1) / 2)

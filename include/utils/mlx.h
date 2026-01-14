@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:45:53 by mbores            #+#    #+#             */
-/*   Updated: 2026/01/09 15:09:26 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:11:56 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ typedef struct win_list
 	void				*mouse_param;
 	void				*key_param;
 	void				*expose_param;
-	t_my_event_my_list	hooks[LASTEvent];
+	// I hate the norm
+	t_my_event_my_list	hooks[36];
 }						t_my_win_list;
 
 typedef struct xvar
