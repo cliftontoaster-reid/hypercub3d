@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 16:01:33 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/05 13:09:20 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:10:43 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	mouse_reset_delta(t_mouse_state *m, void *mlx, void *win,
 	center_x = win_size.x / 2;
 	center_y = win_size.y / 2;
 	mlx_mouse_move(mlx, win, center_x, center_y);
-	// Just update the stored position to the center without processing delta
 	m->pos.x = (float)center_x;
 	m->pos.y = (float)center_y;
 	m->delta.x = 0.0f;

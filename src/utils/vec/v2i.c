@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 12:03:38 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/05 12:21:23 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:09:21 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_vec2i	v2i(int x, int y)
 {
-	t_vec2i result;
+	t_vec2i	result;
 
 	result.x = x;
 	result.y = y;

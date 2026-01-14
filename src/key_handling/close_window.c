@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   close_window.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 16:18:22 by mbores            #+#    #+#             */
-/*   Updated: 2026/01/09 14:52:03 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/14 13:09:16 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map/minimap.h"
-
 
 void	close_window(void *stuff)
 {
