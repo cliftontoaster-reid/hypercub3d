@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:45:53 by mbores            #+#    #+#             */
-/*   Updated: 2026/01/09 15:09:26 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:23:01 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct win_list
 	void				*mouse_param;
 	void				*key_param;
 	void				*expose_param;
-	t_my_event_my_list	hooks[LASTEvent];
+	t_my_event_my_list	*hooks;
 }						t_my_win_list;
 
 typedef struct xvar

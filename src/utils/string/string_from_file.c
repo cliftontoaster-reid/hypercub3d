@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_from_file.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 12:40:42 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/03 13:39:38 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/14 14:07:54 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,18 @@ static int	open_file(const char *filepath)
 
 static int	read_file(int fd, t_string *ret)
 {
-	const size_t	BUF_SIZE = 1024;
+	size_t			buff_size;
 	char			buffer[1024 + 1];
 	ssize_t			bytes_read;
 
-	while ((bytes_read = read(fd, buffer, BUF_SIZE)) > 0)
+	buff_size = 1024;
+	bytes_read = read(fd, buffer, buff_size);
+	while (bytes_read > 0)
 	{
 		buffer[bytes_read] = '\0';
 		if (string_push(ret, buffer) == 0)
 			return (0);
+		bytes_read = read(fd, buffer, buff_size);
 	}
 	if (bytes_read < 0)
 		return (-1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 12:28:25 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/09 16:35:35 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:16:44 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@
 #define RENDER_FOV_DEG 90.0f
 #define WIN_WIDTH 1280
 #define WIN_HEIGHT 720
-
-#ifndef M_PI
-# define M_PI 3.14159265358979323846
-#endif
 
 /**
  * @brief Converts the field of view from degrees to radians.
@@ -183,33 +179,3 @@ void				rendertiming_set_render(t_rendertiming *t, double time);
  * @param timing The render timing statistics to reset.
  */
 void				rendertiming_reset(t_rendertiming *timing);
-
-#ifdef DEBUG
-
-/*
- * @brief Renders a debug timeline of the rendering process.
- *
- * This helps visualize the time taken by different parts of the rendering.
- *
- * @param ctx The render context.
- */
-void				render_debug_timeline(t_renderctx *ctx);
-
-/*
- * @brief Renders the raycast rays on the minimap for debugging.
- * @param ctx The render context.
- * @param minimap The minimap image to draw on.
- */
-void				render_debug_rays(t_renderctx *ctx, t_image *minimap);
-
-/*
- * @brief Renders player information on the minimap for debugging.
- *
- * This can include position, direction, etc.
- *
- * @param ctx The render context.
- * @param minimap The minimap image to draw on.
- */
-void				render_debug_player(t_renderctx *ctx, t_image *minimap);
-
-#endif

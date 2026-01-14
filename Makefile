@@ -68,7 +68,7 @@ ifneq (, $(shell which mold))
 endif
 
 # Project
-NAME = cub3d
+NAME = cub3D
 VERSION = 0.1.0-exp.1
 
 # Folders

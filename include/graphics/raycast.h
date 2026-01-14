@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:34:35 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/13 15:35:05 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/14 13:17:23 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,15 @@ typedef struct s_hit_ctx
 
 typedef struct s_ray_setup
 {
-    t_vec2 					player_dir;
-    t_vec2 					plane;
-    int 					x;
-    int 					screen_width;
-}   						t_ray_setup;
+	t_vec2					player_dir;
+	t_vec2					plane;
+	int						x;
+	int						screen_width;
+}							t_ray_setup;
 
 t_vec2						get_player_dir(float angle);
-void 						setup_ray_direction(t_raycast *ray, t_ray_setup *setup);
+void						setup_ray_direction(t_raycast *ray,
+								t_ray_setup *setup);
 void						setup_x_step(t_raycast *ray, t_renderctx *ctx);
 void						setup_y_step(t_raycast *ray, t_renderctx *ctx);
 
