@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 12:40:42 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/14 13:10:36 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/14 14:20:09 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,18 @@ static int	open_file(const char *filepath)
 
 static int	read_file(int fd, t_string *ret)
 {
-	const size_t	buf_size = 1024;
-	char			buffer[1024 + 1];
-	ssize_t			bytes_read;
+	size_t	buff_size;
+	char	buffer[1024 + 1];
+	ssize_t	bytes_read;
 
-	bytes_read = read(fd, buffer, buf_size);
+	buff_size = 1024;
+	bytes_read = read(fd, buffer, buff_size);
 	while (bytes_read > 0)
 	{
 		buffer[bytes_read] = '\0';
 		if (string_push(ret, buffer) == 0)
 			return (0);
-		bytes_read = read(fd, buffer, buf_size);
+		bytes_read = read(fd, buffer, buff_size);
 	}
 	if (bytes_read < 0)
 		return (-1);
