@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:25:00 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/14 13:52:06 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/14 14:29:10 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@
 
 static int	print_usage(const char *prog)
 {
-	fputs("Usage: ", stderr);
-	fputs(prog, stderr);
-	fputs(" <map_file>\n", stderr);
+	printf("Usage: %s <map_file>\n", prog);
 	return (1);
 }
 
@@ -33,13 +31,13 @@ static t_table	*load_map(const char *path, void *mlx)
 	content = string_from_file(path);
 	if (!content)
 	{
-		fputs("Error: Failed to read map file '\n", stderr);
+		printf("Error: Failed to read map file '%s'\n", path);
 		return (NULL);
 	}
 	map = table_load(content->data, mlx);
 	string_free(content);
 	if (!map)
-		fputs("Error: Failed to load map\n", stderr);
+		printf("Error: Failed to load map\n");
 	return (map);
 }
 
@@ -49,7 +47,7 @@ static t_renderctx	*init_render(t_table *map, void *mlx)
 
 	render = render_init(map, v2i(WIN_WIDTH, WIN_HEIGHT), mlx);
 	if (!render)
-		fputs("Error: Failed to initialize render context\n", stderr);
+		printf("Error: Failed to initialize render context\n");
 	return (render);
 }
 
