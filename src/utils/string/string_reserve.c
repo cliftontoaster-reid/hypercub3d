@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_reserve.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 11:47:48 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/14 14:05:04 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/14 14:18:10 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,9 @@ static size_t	compute_new_capacity(size_t current, size_t min_capacity)
 
 	if (min_capacity > (size_t)SIZE_MAX - 1)
 		return (0);
-	if (!current)
+	new_capacity = current;
+	if (new_capacity == 0)
 		new_capacity = 1;
-	else
-		new_capacity = current;
 	while (new_capacity < min_capacity)
 	{
 		if (new_capacity > ((size_t)SIZE_MAX - 1) / 2)
