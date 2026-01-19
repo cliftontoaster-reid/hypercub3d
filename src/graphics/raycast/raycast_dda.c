@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_dda.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:59:33 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/08 15:24:19 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/19 15:43:13 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	raycast_dda(t_renderctx *ctx, t_raycast *ray, char **map, t_rayhit *hit)
 	t_rayside		side;
 	struct timeval	start_time;
 	struct timeval	end_time;
-	double			elapsed_time;
+	float			elapsed_time;
 	long			time_diff[2];
 
 	gettimeofday(&start_time, NULL);
@@ -29,7 +29,7 @@ void	raycast_dda(t_renderctx *ctx, t_raycast *ray, char **map, t_rayhit *hit)
 	gettimeofday(&end_time, NULL);
 	time_diff[0] = end_time.tv_sec - start_time.tv_sec;
 	time_diff[1] = end_time.tv_usec - start_time.tv_usec;
-	elapsed_time = (double)time_diff[0] * 1e6 + (double)time_diff[1];
+	elapsed_time = (float)time_diff[0] * 1e6 + (float)time_diff[1];
 	rendertiming_add_ray(&ctx->timing, elapsed_time);
 }
 #else

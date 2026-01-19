@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:25:00 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/14 13:52:06 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/19 16:26:53 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ int	main(int argc, char const *argv[])
 	mlx = mlx_init();
 	map = load_map(argv[1], mlx);
 	if (!map)
+	{
+		mlx_destroy_display(mlx);
+		free(mlx);
 		return (1);
+	}
 	render = init_render(map, mlx);
 	if (!render)
 	{

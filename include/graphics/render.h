@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 12:28:25 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/14 13:16:44 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/19 15:43:13 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,19 @@ static inline float	render_fov_rad(void)
 typedef struct s_rendertiming
 {
 	/* average time per ray (in microseconds) */
-	double			per_ray_avg;
+	float			per_ray_avg;
 	/* max time observed for a single ray */
-	double			per_ray_max;
+	float			per_ray_max;
 	/* min time observed for a single ray */
-	double			per_ray_min;
+	float			per_ray_min;
 	/* total time taken by all rays in the last batch */
-	double			all_rays;
+	float			all_rays;
 	/* time taken to render the image (in microseconds) */
-	double			image_render;
+	float			image_render;
 	/* number of per-ray samples used to compute avg */
 	size_t			samples;
 	/* the raw ray times for the last frame */
-	double			ray_times[RAYCAST_MAX_RAYS];
+	float			ray_times[RAYCAST_MAX_RAYS];
 	/* the next index to write a ray time to */
 	size_t			next_ray_index;
 }					t_rendertiming;
@@ -151,7 +151,7 @@ void				render_debug(t_renderctx *ctx);
  * @param t The render timing statistics.
  * @param time The time taken by the raycast.
  */
-void				rendertiming_add_ray(t_rendertiming *t, double time);
+void				rendertiming_add_ray(t_rendertiming *t, float time);
 
 /*
  * @brief Sets the total time taken by all raycasts in the last frame.
@@ -161,7 +161,7 @@ void				rendertiming_add_ray(t_rendertiming *t, double time);
  * @param t The render timing statistics.
  * @param time The total time for all raycasts.
  */
-void				rendertiming_set_all_rays(t_rendertiming *t, double time);
+void				rendertiming_set_all_rays(t_rendertiming *t, float time);
 
 /*
  * @brief Sets the time taken to render the image.
@@ -172,7 +172,7 @@ void				rendertiming_set_all_rays(t_rendertiming *t, double time);
  * @param t The render timing statistics.
  * @param time The time taken to render the image.
  */
-void				rendertiming_set_render(t_rendertiming *t, double time);
+void				rendertiming_set_render(t_rendertiming *t, float time);
 
 /*
  * @brief Resets the render timing statistics for the next frame.

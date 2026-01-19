@@ -30,7 +30,7 @@ static void	init_ray(t_raycast *ray, t_renderctx *ctx)
 	ray->fisheye_correction = true;
 }
 
-static double	safe_inv(double v)
+static float	safe_inv(float v)
 {
 	if (fabs(v) < 1e-8)
 		return (1e30);

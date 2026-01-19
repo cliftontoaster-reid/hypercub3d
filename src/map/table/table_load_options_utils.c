@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:46:25 by mbores            #+#    #+#             */
-/*   Updated: 2026/01/13 14:50:11 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/19 16:27:04 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	ld(t_image **i, const char *p, t_table *t, bool *c)
 	free(p_trimmed);
 	if (!*i)
 	{
-		table_free(t);
+		// table_free(t);
 		return (false);
 	}
 	*c = true;

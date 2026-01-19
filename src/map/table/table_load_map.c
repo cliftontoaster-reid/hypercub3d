@@ -6,13 +6,14 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 14:04:51 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/13 14:39:08 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/19 16:42:51 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "map/table.h"
 #include <math.h>
+#include <stdio.h>
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
@@ -88,6 +89,7 @@ bool	table_load_map(t_table *table, const char *map)
 		}
 		i++;
 	}
-	table->cells[ctx.y][ctx.x] = '2';
+	if (ctx.y == table->height - 1)
+		table->cells[ctx.y][ctx.x] = '2';
 	return (ctx.player_found);
 }

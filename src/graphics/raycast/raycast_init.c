@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:48:24 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/12/22 14:14:26 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/19 15:43:13 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static t_raycast	*allocate_raycast(t_rayoptions *options, t_table *map_table)
 static void	calculate_ray_and_delta(t_raycast *raycast, t_rayoptions *options,
 		int x)
 {
-	double	camera_x;
+	float	camera_x;
 
-	camera_x = 2 * x / (double)options->win_width - 1;
+	camera_x = 2 * x / (float)options->win_width - 1;
 	raycast->ray_dir.x = options->player_dir.x + options->camera_plane.x
 		* camera_x;
 	raycast->ray_dir.y = options->player_dir.y + options->camera_plane.y

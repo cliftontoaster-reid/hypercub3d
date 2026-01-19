@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rendertiming_add_ray.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 14:55:14 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/06 15:21:30 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/19 15:43:13 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graphics/render.h"
 
-void	rendertiming_add_ray(t_rendertiming *t, double time)
+void	rendertiming_add_ray(t_rendertiming *t, float time)
 {
 	if (t->next_ray_index < RAYCAST_MAX_RAYS)
 	{
