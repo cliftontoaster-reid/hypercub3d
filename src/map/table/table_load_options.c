@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 13:05:49 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/19 16:17:07 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/20 12:35:02 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,6 @@
 #include "map/table.h"
 
 #define CMP ft_strncmp
-
-static void	opt_ctx_init(t_opt_ctx *c)
-{
-	ft_bzero(c, sizeof(t_opt_ctx));
-}
-
-static bool	opt_ctx_complete(t_opt_ctx *c)
-{
-	return (c->no && c->so && c->we && c->ea && c->f && c->c);
-}
 
 static void	free_lines(char **lines)
 {
@@ -54,22 +44,14 @@ static bool	parse_option_line(t_table *t, char *l, t_opt_ctx *c)
 	return (false);
 }
 
-bool	table_load_options(t_table *t, const char *options)
+static bool	parse_option_lines(t_table *t, char **lines, t_opt_ctx *ctx)
 {
-	t_opt_ctx	ctx;
-	char		**lines;
-	int			i;
+	int	i;
 
-	if (!t || !options)
-		return (false);
-	opt_ctx_init(&ctx);
-	lines = ft_split(options, '\n');
-	if (!lines)
-		return (false);
 	i = 0;
 	while (lines[i])
 	{
-		if (!parse_option_line(t, lines[i], &ctx))
+		if (!parse_option_line(t, lines[i], ctx))
 		{
 			free_lines(lines);
 			return (false);
@@ -77,6 +59,22 @@ bool	table_load_options(t_table *t, const char *options)
 		i++;
 	}
 	free_lines(lines);
+	return (true);
+}
+
+bool	table_load_options(t_table *t, const char *options)
+{
+	t_opt_ctx	ctx;
+	char		**lines;
+
+	if (!t || !options)
+		return (false);
+	opt_ctx_init(&ctx);
+	lines = ft_split(options, '\n');
+	if (!lines)
+		return (false);
+	if (!parse_option_lines(t, lines, &ctx))
+		return (false);
 	if (!opt_ctx_complete(&ctx))
 	{
 		table_free(t);

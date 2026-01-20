@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:46:25 by mbores            #+#    #+#             */
-/*   Updated: 2026/01/19 16:27:04 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/20 12:32:41 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 #include "graphics/image.h"
 #include "libft.h"
 #include "map/table.h"
+
+void	opt_ctx_init(t_opt_ctx *c)
+{
+	ft_bzero(c, sizeof(t_opt_ctx));
+}
+
+bool	opt_ctx_complete(t_opt_ctx *c)
+{
+	return (c->no && c->so && c->we && c->ea && c->f && c->c);
+}
 
 t_colour	parse_rbg(const char *str)
 {
@@ -48,10 +58,7 @@ bool	ld(t_image **i, const char *p, t_table *t, bool *c)
 	*i = image_from_file(t->mlx, p_trimmed);
 	free(p_trimmed);
 	if (!*i)
-	{
-		// table_free(t);
 		return (false);
-	}
 	*c = true;
 	return (true);
 }
