@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rendertiming_set_render.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 14:55:46 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/06 14:55:47 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/19 15:43:13 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graphics/render.h"
 
-void	rendertiming_set_render(t_rendertiming *t, double time)
+void	rendertiming_set_render(t_rendertiming *t, float time)
 {
 	t->image_render = time;
 }

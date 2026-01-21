@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 15:25:07 by mbores            #+#    #+#             */
-/*   Updated: 2026/01/13 15:41:12 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/19 15:43:13 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ t_vec2	get_player_dir(float angle)
 
 void	setup_ray_direction(t_raycast *ray, t_ray_setup *setup)
 {
-	double	camera_x;
+	float	camera_x;
 
-	camera_x = 2 * setup->x / (double)setup->screen_width - 1;
+	camera_x = 2 * setup->x / (float)setup->screen_width - 1;
 	ray->ray_dir.x = setup->player_dir.x + setup->plane.x * camera_x;
 	ray->ray_dir.y = setup->player_dir.y + setup->plane.y * camera_x;
 }

@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 14:03:27 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/13 14:50:16 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:06:14 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ t_vec2i			table_get_player_pos(t_table *table);
 bool			is_valid_cell_char(char c);
 bool			is_player_char(char c);
 
-t_colour		parse_rbg(const char *str);
+void			opt_ctx_init(t_opt_ctx *c);
+bool			opt_ctx_complete(t_opt_ctx *c);
+bool			parse_rbg(const char *str, t_colour *out);
 bool			ld(t_image **i, const char *p, t_table *t, bool *c);
 bool			lrgb(t_colour *col, const char *s, t_table *t, bool *c);
 

@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:10:48 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/13 14:30:52 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:40:37 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,17 @@ static t_table	*create_table_from_map(const char *map, void *mlx)
 	return (table_new(width, height, mlx));
 }
 
+static inline void	*freestuff(char *options, char *map, t_table *table)
+{
+	if (options)
+		free(options);
+	if (map)
+		free(map);
+	if (table)
+		table_free(table);
+	return (NULL);
+}
+
 t_table	*table_load(const char *content, void *mlx)
 {
 	t_table	*table;
@@ -65,11 +76,11 @@ t_table	*table_load(const char *content, void *mlx)
 		return (NULL);
 	table = create_table_from_map(map, mlx);
 	if (!table)
-		return (free(options), free(map), NULL);
+		return (freestuff(options, map, NULL));
 	if (!table_load_options(table, options))
-		return (free(options), free(map), table_free(table), NULL);
+		return (freestuff(options, map, table));
 	if (!table_load_map(table, map))
-		return (free(options), free(map), table_free(table), NULL);
+		return (freestuff(options, map, table));
 	free(options);
 	free(map);
 	return (table);

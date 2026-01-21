@@ -62,7 +62,7 @@ dkms.conf
 /compile_commands.json
 
 # Binary
-/cub3d
+/cub3D
 
 # VS Code settings
 .vscode/*
