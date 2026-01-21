@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_update.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 12:48:16 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/13 15:54:16 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/21 15:10:23 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,25 @@
 
 static bool	can_move(t_renderctx *ctx, t_vec2 *new_pos)
 {
+	int	x;
+	int	y;
+
 	(void)ctx;
-	(void)new_pos;
-	ft_printf("Collision detection not implemented yet.\n");
-	abort();
+	x = (int)(new_pos->x + 0.2);
+	y = (int)(new_pos->y + 0.2);
+	if (x < 0 || x >= (int)ctx->map->width || y < 0
+		|| y >= (int)ctx->map->height)
+		return (false);
+	if (ctx->map->cells[y][x] == '1')
+		return (false);
+	x = (int)(new_pos->x - 0.2);
+	y = (int)(new_pos->y - 0.2);
+	if (x < 0 || x >= (int)ctx->map->width || y < 0
+		|| y >= (int)ctx->map->height)
+		return (false);
+	if (ctx->map->cells[y][x] == '1')
+		return (false);
+	return (true);
 }
 
 #else
