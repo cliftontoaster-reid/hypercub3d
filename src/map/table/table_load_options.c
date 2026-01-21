@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 13:05:49 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/20 12:35:02 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:33:59 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 #include "map/table.h"
 
 #define CMP ft_strncmp
+
+bool	opt_ctx_complete(t_opt_ctx *c)
+{
+	return (c->no && c->so && c->we && c->ea && c->f && c->c);
+}
 
 static void	free_lines(char **lines)
 {
@@ -69,7 +74,7 @@ bool	table_load_options(t_table *t, const char *options)
 
 	if (!t || !options)
 		return (false);
-	opt_ctx_init(&ctx);
+	ft_bzero(&ctx, sizeof(t_opt_ctx));
 	lines = ft_split(options, '\n');
 	if (!lines)
 		return (false);

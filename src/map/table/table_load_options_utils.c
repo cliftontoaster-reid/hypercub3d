@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:46:25 by mbores            #+#    #+#             */
-/*   Updated: 2026/01/20 12:32:41 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:35:29 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,74 @@
 #include "graphics/image.h"
 #include "libft.h"
 #include "map/table.h"
+#include <stdbool.h>
 
-void	opt_ctx_init(t_opt_ctx *c)
+static inline bool	is_valid_rgb(const char *s)
 {
-	ft_bzero(c, sizeof(t_opt_ctx));
+	size_t	i;
+	uint8_t	k;
+
+	i = 0;
+	k = 0;
+	if (ft_strfreq(s, ',') != 2)
+		return (false);
+	while (s[i])
+	{
+		if (!ft_isdigit(s[i]) && s[i] != ',')
+			return (false);
+		if ((i == 0 || s[i - 1] == ',') && ft_isdigit(s[i]))
+			k++;
+		if (k > 3)
+			return (false);
+		i++;
+	}
+	if (k != 3)
+		return (false);
+	return (true);
 }
 
-bool	opt_ctx_complete(t_opt_ctx *c)
+static inline bool	fuckyouvscode(const char *s, int *out)
 {
-	return (c->no && c->so && c->we && c->ea && c->f && c->c);
-}
+	char	**components;
+	int		i;
+	bool	ret;
 
-t_colour	parse_rbg(const char *str)
-{
-	t_colour	colour;
-	char		**components;
-	int			i;
-
-	components = ft_split(str, ',');
+	ret = true;
+	components = ft_split(s, ',');
 	if (!components)
-		return ((t_colour){0, 0, 0, 255});
-	colour.r = (uint8_t)ft_atoi(components[0]);
-	colour.g = (uint8_t)ft_atoi(components[1]);
-	colour.b = (uint8_t)ft_atoi(components[2]);
-	colour.a = 255;
+	{
+		free(components);
+		return (false);
+	}
+	out[0] = ft_atoi(components[0]);
+	out[1] = ft_atoi(components[1]);
+	out[2] = ft_atoi(components[2]);
+	if (out[0] < 0 || out[0] > 255)
+		ret = false;
+	if (out[1] < 0 || out[1] > 255)
+		ret = false;
+	if (out[2] < 0 || out[2] > 255)
+		ret = false;
 	i = 0;
 	while (components[i])
 		free(components[i++]);
 	free(components);
-	return (colour);
+	return (ret);
+}
+
+bool	parse_rbg(const char *str, t_colour *out)
+{
+	int	tmp[3];
+
+	if (!is_valid_rgb(str))
+		return (false);
+	if (!fuckyouvscode(str, tmp))
+		return (false);
+	out->r = (uint8_t)tmp[0];
+	out->g = (uint8_t)tmp[1];
+	out->b = (uint8_t)tmp[2];
+	out->a = 255;
+	return (true);
 }
 
 bool	ld(t_image **i, const char *p, t_table *t, bool *c)
@@ -67,13 +106,15 @@ bool	lrgb(t_colour *col, const char *s, t_table *t, bool *c)
 {
 	char	*s_trimmed;
 
+	(void)t;
 	if (*c)
+		return (false);
+	s_trimmed = ft_strtrim(s, " \t");
+	if (!parse_rbg(s_trimmed, col))
 	{
-		table_free(t);
+		free(s_trimmed);
 		return (false);
 	}
-	s_trimmed = ft_strtrim(s, " \t");
-	*col = parse_rbg(s_trimmed);
 	free(s_trimmed);
 	*c = true;
 	return (true);

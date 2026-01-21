@@ -6,7 +6,7 @@
 /*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 14:03:27 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/20 12:33:12 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:06:14 by mbores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ bool			is_player_char(char c);
 
 void			opt_ctx_init(t_opt_ctx *c);
 bool			opt_ctx_complete(t_opt_ctx *c);
-t_colour		parse_rbg(const char *str);
+bool			parse_rbg(const char *str, t_colour *out);
 bool			ld(t_image **i, const char *p, t_table *t, bool *c);
 bool			lrgb(t_colour *col, const char *s, t_table *t, bool *c);
 
