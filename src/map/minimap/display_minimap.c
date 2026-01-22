@@ -69,7 +69,7 @@ static void	put_squares_on_map(t_renderctx *all, int minimap_x, int minimap_y,
 	{
 		while (v[2] < 9 && v[0] < all->map->width)
 		{
-			if (all->map->cells[v[1]][v[0]] == '2')
+			if (all->map->cells[v[1]][v[0]] == '\0')
 				break ;
 			if (all->map->cells[v[1]][v[0]] == '0')
 				put_pix_in_sq(all->buffer, all->map->floor_col, v[2], v[3]);

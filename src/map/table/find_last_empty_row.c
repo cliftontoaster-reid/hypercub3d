@@ -3,15 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   find_last_empty_row.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:26:03 by mbores            #+#    #+#             */
-/*   Updated: 2026/01/13 14:52:42 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/22 13:40:05 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "map/table.h"
+
+static bool	is_remaining_empty(const char *s)
+{
+	while (*s)
+	{
+		if (!ft_ciswhite((unsigned char)*s))
+			return (false);
+		s++;
+	}
+	return (true);
+}
 
 static bool	is_line_empty(const char *s)
 {
@@ -37,11 +48,21 @@ static size_t	line_len(const char *s)
 	return (i);
 }
 
+static size_t	get_split_pos(const char *content, size_t i, size_t len)
+{
+	if (content[i + len] == '\n')
+		return (i + len + 1);
+	return (i + len);
+}
+
 size_t	find_last_empty_row(const char *content)
 {
-	size_t		i;
-	size_t		len;
+	size_t	i;
+	size_t	len;
+	size_t	last_valid_pos;
+	size_t	split;
 
+	last_valid_pos = 0;
 	if (!content)
 		return (0);
 	i = 0;
@@ -50,13 +71,13 @@ size_t	find_last_empty_row(const char *content)
 		len = line_len(content + i);
 		if (is_line_empty(content + i))
 		{
-			if (content[i + len] == '\n')
-				return (i + len + 1);
-			return (i + len);
+			split = get_split_pos(content, i, len);
+			if (!is_remaining_empty(content + split))
+				last_valid_pos = split;
 		}
 		i += len;
 		if (content[i] == '\n')
 			i++;
 	}
-	return (0);
+	return (last_valid_pos);
 }

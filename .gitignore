@@ -41,6 +41,7 @@
 *.su
 *.idb
 *.pdb
+vgcore.*
 
 # Kernel Module Compile Results
 *.mod*
@@ -56,6 +57,7 @@ dkms.conf
 
 # Target files
 /target/
+/.cache
 
 # Link flags
 *.linkflag_*

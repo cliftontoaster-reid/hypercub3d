@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:25:00 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/19 16:26:53 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/22 12:07:02 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,26 @@ static t_renderctx	*init_render(t_table *map, void *mlx)
 	return (render);
 }
 
+static int	run_game(t_table *map, void *mlx)
+{
+	t_renderctx	*render;
+
+	render = init_render(map, mlx);
+	if (!render)
+	{
+		table_free(map);
+		return (1);
+	}
+	printf("Map loaded successfully: %zux%zu\n", map->width, map->height);
+	return (0);
+}
+
 int	main(int argc, char const *argv[])
 {
-	t_table		*map;
-	t_renderctx	*render;
-	void		*mlx;
+	t_table	*map;
+	void	*mlx;
 
-	if (argc != 2)
+	if (argc < 2 || argc > 3)
 		return (print_usage(argv[0]));
 	mlx = mlx_init();
 	map = load_map(argv[1], mlx);
@@ -69,12 +82,13 @@ int	main(int argc, char const *argv[])
 		free(mlx);
 		return (1);
 	}
-	render = init_render(map, mlx);
-	if (!render)
+	if (argc == 3 && ft_strcmp(argv[2], "--check") == 0)
 	{
+		printf("Map is valid.\n");
 		table_free(map);
-		return (1);
+		mlx_destroy_display(mlx);
+		free(mlx);
+		return (0);
 	}
-	printf("Map loaded successfully: %zux%zu\n", map->width, map->height);
-	return (0);
+	return (run_game(map, mlx));
 }

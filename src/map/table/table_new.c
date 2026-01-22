@@ -24,6 +24,7 @@ static bool	table_alloc_cells(t_table *table, size_t height, size_t width)
 		free(table);
 		return (NULL);
 	}
+	ft_bzero(table->cells, sizeof(char *) * height);
 	y = 0;
 	while (y < height)
 	{
@@ -33,6 +34,7 @@ static bool	table_alloc_cells(t_table *table, size_t height, size_t width)
 			table_free(table);
 			return (false);
 		}
+		ft_bzero(table->cells[y], sizeof(char) * width + 1);
 		y++;
 	}
 	return (true);
