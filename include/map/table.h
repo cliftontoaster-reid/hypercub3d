@@ -95,4 +95,6 @@ bool			ld(t_image **i, const char *p, t_table *t, bool *c);
 bool			lrgb(t_colour *col, const char *s, t_table *t, bool *c);
 
 bool			table_load_options(t_table *table, const char *options);
+bool			table_parse_option_line(t_table *t, char *l, t_opt_ctx *c);
+bool			table_is_space(char c);
 bool			table_load_map(t_table *table, const char *map);

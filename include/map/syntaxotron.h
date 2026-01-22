@@ -64,9 +64,10 @@ bool				syn_free_torrentrefill(t_torrentrefill *refill);
 /// @brief Run the torrent refill algorithm
 /// @param refill The torrent refill structure
 /// @param start_pos The starting position for the algorithm
+/// @param out_leak Optional pointer to store the position where a leak was found
 /// @return true if successful, false otherwise
 bool				syn_run_torrentrefill(t_torrentrefill *refill,
-						t_vec2i start_pos);
+						t_vec2i start_pos, t_vec2i *out_leak);
 
 /// @brief Validate that the map is not using American layout
 ///

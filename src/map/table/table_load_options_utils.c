@@ -21,18 +21,16 @@ static inline bool	is_valid_rgb(const char *s)
 	size_t	i;
 	uint8_t	k;
 
-	i = 0;
-	k = 0;
 	if (ft_strfreq(s, ',') != 2)
 		return (false);
+	i = 0;
+	k = 0;
 	while (s[i])
 	{
-		if (!ft_isdigit(s[i]) && s[i] != ',')
+		if (!ft_isdigit(s[i]) && s[i] != ',' && s[i] != ' ' && s[i] != '\t')
 			return (false);
-		if ((i == 0 || s[i - 1] == ',') && ft_isdigit(s[i]))
+		if (ft_isdigit(s[i]) && (i == 0 || !ft_isdigit(s[i - 1])))
 			k++;
-		if (k > 3)
-			return (false);
 		i++;
 	}
 	if (k != 3)
@@ -53,9 +51,15 @@ static inline bool	fuckyouvscode(const char *s, int *out)
 		free(components);
 		return (false);
 	}
-	out[0] = ft_atoi(components[0]);
-	out[1] = ft_atoi(components[1]);
-	out[2] = ft_atoi(components[2]);
+	char *t0 = ft_strtrim(components[0], " \t");
+	out[0] = ft_atoi(t0);
+	free(t0);
+	char *t1 = ft_strtrim(components[1], " \t");
+	out[1] = ft_atoi(t1);
+	free(t1);
+	char *t2 = ft_strtrim(components[2], " \t");
+	out[2] = ft_atoi(t2);
+	free(t2);
 	if (out[0] < 0 || out[0] > 255)
 		ret = false;
 	if (out[1] < 0 || out[1] > 255)

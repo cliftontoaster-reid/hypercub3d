@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   table_load.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:10:48 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/21 14:40:37 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/22 11:38:43 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "map/syntaxotron.h"
 #include "map/table.h"
+#include <stdio.h>
 
 static bool	split_content(const char *content, char **opt, char **map)
 {
@@ -24,6 +26,7 @@ static bool	split_content(const char *content, char **opt, char **map)
 	*map = ft_substr(content, pos, ft_strlen(content) - pos);
 	if (!*opt || !*map)
 		return (false);
+	printf("DEBUG MAP:\n%s\nEND DEBUG\n", *map);
 	return (true);
 }
 
@@ -80,6 +83,8 @@ t_table	*table_load(const char *content, void *mlx)
 	if (!table_load_options(table, options))
 		return (freestuff(options, map, table));
 	if (!table_load_map(table, map))
+		return (freestuff(options, map, table));
+	if (!syn_validate_unamerican(table))
 		return (freestuff(options, map, table));
 	free(options);
 	free(map);
