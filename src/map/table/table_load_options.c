@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   table_load_options.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 13:05:49 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/21 14:33:59 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/22 10:31:27 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,6 @@ bool	table_load_options(t_table *t, const char *options)
 	if (!parse_option_lines(t, lines, &ctx))
 		return (false);
 	if (!opt_ctx_complete(&ctx))
-	{
-		table_free(t);
 		return (false);
-	}
 	return (true);
 }

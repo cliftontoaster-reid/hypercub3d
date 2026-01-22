@@ -33,14 +33,19 @@ static bool	syn_visit_disneyland(t_torrentrefill *refill, t_vec2i pos)
 	if (refill->refilled[pos.y][pos.x])
 		return (true);
 	refill->refilled[pos.y][pos.x] = true;
-	if (refill->desk->cells[pos.y][pos.x] == ' ')
+	if (refill->desk->cells[pos.y][pos.x] == ' '
+		|| refill->desk->cells[pos.y][pos.x] == '\0')
 		return (false);
 	if (refill->desk->cells[pos.y][pos.x] != '0')
 		return (true);
-	syn_throw_pos_eternal_hell(refill, v2i(pos.x + 1, pos.y));
-	syn_throw_pos_eternal_hell(refill, v2i(pos.x - 1, pos.y));
-	syn_throw_pos_eternal_hell(refill, v2i(pos.x, pos.y + 1));
-	syn_throw_pos_eternal_hell(refill, v2i(pos.x, pos.y - 1));
+	if (!syn_throw_pos_eternal_hell(refill, v2i(pos.x + 1, pos.y)))
+		return (false);
+	if (!syn_throw_pos_eternal_hell(refill, v2i(pos.x - 1, pos.y)))
+		return (false);
+	if (!syn_throw_pos_eternal_hell(refill, v2i(pos.x, pos.y + 1)))
+		return (false);
+	if (!syn_throw_pos_eternal_hell(refill, v2i(pos.x, pos.y - 1)))
+		return (false);
 	return (true);
 }
 

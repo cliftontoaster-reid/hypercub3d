@@ -63,7 +63,7 @@ static bool	write_cell(t_table *t, char c, t_parse_ctx *ctx)
 
 static void	end_row(t_table *t, t_parse_ctx *ctx)
 {
-	t->cells[ctx->y][ctx->x] = '2';
+	t->cells[ctx->y][ctx->x] = '\0';
 	ctx->y++;
 	ctx->x = 0;
 }
@@ -90,6 +90,6 @@ bool	table_load_map(t_table *table, const char *map)
 		i++;
 	}
 	if (ctx.y == table->height - 1)
-		table->cells[ctx.y][ctx.x] = '2';
+		table->cells[ctx.y][ctx.x] = '\0';
 	return (ctx.player_found);
 }
