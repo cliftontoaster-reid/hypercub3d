@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:44:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/22 10:57:41 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/22 13:40:00 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 /// @brief Get the ANSI color code associated with a specific map character.
 /// @param c The character to check (e.g., '1', '0', 'N').
 /// @return A string containing the ANSI color code.
-const char *err_get_char_colour(char c);
+const char	*err_get_char_colour(char c);
 
 /// @brief Print a focused, zoomed-in square around a specific position.
 /// Good for large maps where printing the whole thing is too noisy.
@@ -36,15 +36,15 @@ const char *err_get_char_colour(char c);
 /// @param pos The center position of the view.
 /// @param radius The number of cells to show in each direction (e.g., 5).
 /// @param msg An optional custom message.
-void err_print_context(const t_table *map, t_vec2i pos, int radius,
-											 const char *msg);
+void		err_print_context(const t_table *map, t_vec2i pos, int radius,
+				const char *msg);
 
 /// @brief Print an error related to parsing a specific option line.
 /// @param line The full line content that caused the error.
 /// @param msg The specific reason (e.g., "Duplicate option", "Invalid RGB").
-void err_print_option_error(const char *line, const char *msg);
+void		err_print_option_error(const char *line, const char *msg);
 
 /// @brief Standard error message printer.
 /// @param header The context (e.g., "Map Error").
 /// @param msg The detail (e.g., "File not found").
-void err_msg(const char *header, const char *msg);
+void		err_msg(const char *header, const char *msg);

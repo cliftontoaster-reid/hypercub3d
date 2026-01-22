@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:10:48 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/22 11:38:43 by lfiorell         ###   ########.fr       */
+/*   Updated: 2026/01/22 13:45:18 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static bool	split_content(const char *content, char **opt, char **map)
 	*map = ft_substr(content, pos, ft_strlen(content) - pos);
 	if (!*opt || !*map)
 		return (false);
-	printf("DEBUG MAP:\n%s\nEND DEBUG\n", *map);
 	return (true);
 }
 
