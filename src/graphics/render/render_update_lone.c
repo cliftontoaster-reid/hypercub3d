@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_update_lone.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbores <mbores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 15:51:51 by mbores            #+#    #+#             */
-/*   Updated: 2026/01/13 16:49:47 by mbores           ###   ########.fr       */
+/*   Updated: 2026/01/26 13:34:28 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static float	get_delta_time_sec(struct timespec *last_frame)
 	float			delta;
 
 	clock_gettime(CLOCK_MONOTONIC, &current);
-	delta = (current.tv_sec - last_frame->tv_sec)
-		+ (current.tv_nsec - last_frame->tv_nsec) / 1000000000.0f;
+	delta = (current.tv_sec - last_frame->tv_sec) + (current.tv_nsec
+			- last_frame->tv_nsec) / 1000000000.0f;
 	*last_frame = current;
 	return (delta);
 }

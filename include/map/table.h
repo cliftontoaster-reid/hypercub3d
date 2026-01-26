@@ -74,6 +74,7 @@ typedef struct s_opt_ctx
 size_t			get_longest_row_length(const char *str);
 
 size_t			find_last_empty_row(const char *content);
+bool			find_split_pos(const char *content, size_t *opt_end);
 
 t_table			*table_new(size_t width, size_t height, void *mlx);
 t_table			*table_load(const char *content, void *mlx);

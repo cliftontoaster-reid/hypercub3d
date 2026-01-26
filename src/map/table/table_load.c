@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/04 15:10:48 by lfiorell          #+#    #+#             */
-/*   Updated: 2026/01/22 13:45:18 by lfiorell         ###   ########.fr       */
+/*   Created: 2026/01/26 13:22:58 by lfiorell          #+#    #+#             */
+/*   Updated: 2026/01/26 13:22:58 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static bool	split_content(const char *content, char **opt, char **map)
 {
 	size_t	pos;
 
-	pos = find_last_empty_row(content);
-	if (pos == 0)
+	if (!find_split_pos(content, &pos))
 		return (false);
 	*opt = ft_substr(content, 0, pos);
 	*map = ft_substr(content, pos, ft_strlen(content) - pos);
